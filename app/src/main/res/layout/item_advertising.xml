@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="210dp"
+    android:layout_height="match_parent"
+    android:paddingEnd="@dimen/margin_10"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvAdvertising"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        app:cardCornerRadius="@dimen/margin_20">
+
+        <ImageView
+            android:id="@+id/ivAdvertising"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_advertising" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:textSize="@dimen/text_size_12"
+            android:layout_height="wrap_content"
+            android:text="Ветклиника «Большая медведица»"
+            android:layout_margin="@dimen/margin_10"
+            android:textColor="@color/white"
+            />
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

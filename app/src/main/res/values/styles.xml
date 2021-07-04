@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="bottomSheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="TransparentBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="bottomSheetStyle">@style/bottomSheetStyleWrapper</item>
+
+    </style>
+
+    <style name="RoundedImageView_24">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerRadius">24dp</item>
+    </style>
+
+    <style name="CircleImageView_36">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">18dp</item>
+    </style>
+
+    <style name="CircleImageView_56">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">28dp</item>
+    </style>
+
+    <style name="CircleImageView_92">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">46dp</item>
+    </style>
+
+    <style name="CircleImageView_120">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">60dp</item>
+    </style>
+
+
+</resources>

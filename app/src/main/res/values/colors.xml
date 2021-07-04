@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#c86dd7</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="primaryColor">#3023ae</color>
+    <color name="purple">#5856d6</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#000000</color>
+    <color name="black10">#19000000</color>
+    <color name="black30">#4c000000</color>
+    <color name="black70">#b3000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="white_50">#80ffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="colorRed">#f54b5e</color>
+
+
+
+
+    <color name="start_color_gradient">#c86dd7</color>
+    <color name="end_color_gradient">#3023ae</color>
+
+
+    <color name="small_pink">#FF308F</color>
+    <color name="small_pink_alpha">#B3FF92C4</color>
+    <color name="small_red">#FF3030</color>
+    <color name="small_red_alpha">#B3FF9C9C</color>
+    <color name="small_green">#29FFB4</color>
+    <color name="small_green_alpha">#B3AEFFE3</color>
+    <color name="small_blue">#304FFE</color>
+    <color name="small_blue_alpha">#B38F98CD</color>
+
+
+    <color name="yellow">#FF9500</color>
+    <color name="phiolet">#5856D6</color>
+    <color name="greey">#EFEFF4</color>
+    <color name="ghost">#c7c7cc</color>
+    <color name="green">#4cd964</color>
+
+
+    <color name="grey">#B3C5C5C5</color>
+    <color name="new_grey">#B3878787</color>
+    <color name="dark_grey">#616161</color>
+</resources>

@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">LIR</string>
+
+    <string name="sign_in_enter_phone">Введите номер телефона, мы отправим вам код для подтверждения</string>
+    <string name="sign_in_your_phone">Ваш номер телефона</string>
+    <string name="sign_in_enter_phone_hint">+7</string>
+    <string name="sign_in_enter_otp">Введите 4 числа, отправленные на %s</string>
+    <string name="sign_in_resend_otp_after">Отправить код еще раз через 0:30</string>
+    <string name="sign_in_resend_otp">Отправить еще раз</string>
+    <string name="sign_in_enter_name">Придумайте никнейм</string>
+    <string name="sign_in_enter_name_label">Ваш никнейм</string>
+    <string name="sign_in_enter_name_hint">Иванов Иван</string>
+    <string name="sign_in_load">Загрузить</string>
+    <string name="sign_in_next">Далее</string>
+    <string name="sign_in_load_photo">Загрузите фотографию</string>
+    <string name="sign_in_camera">Камера</string>
+    <string name="sign_in_gallery">Галерея</string>
+    <string name="sign_in_cancel">ОТМЕНИТЬ</string>
+    <string name="permission_need">Для корректной работы приложения необходимы разрешения</string>
+
+    <string name="title_map">Карта</string>
+    <string name="title_contact">Контакты</string>
+    <string name="title_chat">Чаты</string>
+    <string name="title_subscriptions">Подписки</string>
+    <string name="title_settings">Настройки</string>
+    <string name="quit">Выход</string>
+
+    <string name="title_">LIR</string>
+    <string name="exit_app">Вы действительно хотите выйти из приложения?</string>
+
+    <string name="ok">ОК</string>
+    <string name="ok2">Ок</string>
+    <string name="cancel">Отмена</string>
+    <string name="cancel2">ОТМЕНИТЬ</string>
+
+    <string name="chat_themed">Лир</string>
+    <string name="chat_chat">Диалог</string>
+    <string name="chat_channel">Чат-канал</string>
+    <string name="chat_commercial">Бизнес</string>
+
+    <string name="show_all">См. все</string>
+
+    <string name="settings_select_language">Выбор языка</string>
+    <string name="settings_support">Техническая поддержка</string>
+    <string name="settings_notification">Уведомления</string>
+    <string name="settings_confidentiality">Конфиденциальность</string>
+    <string name="settings_about_app">О приложении</string>
+
+
+    <string name="chat_sent_message_hint">Введите текст сообщения</string>
+
+    <string name="location">Location permission is required to run the demo</string>
+    <string name="google_maps_key">AIzaSyARgumVpVtRzUa4p_rHP9FRZdnA-iNM8fA</string>
+
+
+    <string name="call_service_notification_text">call(s) in progress</string>
+    <string name="pref_call_vibrate_enable_key">vibrate_enable</string>
+    <string name="saved_data_manager_key">data_manager_key</string>
+</resources>

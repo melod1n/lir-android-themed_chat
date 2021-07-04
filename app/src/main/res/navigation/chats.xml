@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/chats"
+    app:startDestination="@id/chatFragment">
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.android.lir.screens.main.chats.ChatFragment"
+        android:label="ChatFragment">
+    <action
+        android:id="@+id/toPrivateChat"
+        app:destination="@id/chatDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatDetailFragment"
+        android:name="com.android.lir.screens.main.contacts.chatdetail.ChatDetailFragment"
+        android:label="ChatDetailFragment">
+        <argument
+            android:name="chat_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+</navigation>

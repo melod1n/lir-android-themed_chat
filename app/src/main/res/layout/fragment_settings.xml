@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".screens.main.settings.SettingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/toolbar_gradient"
+        android:elevation="@dimen/margin_4"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_weight="1"
+            android:text="@string/title_settings"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_20"
+            android:paddingTop="@dimen/margin_16"
+            android:paddingBottom="@dimen/margin_16"/>
+
+        <TextView
+            android:id="@+id/quit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/quit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16"
+            android:paddingTop="@dimen/margin_16"
+            android:paddingBottom="@dimen/margin_16"
+            android:layout_marginEnd="@dimen/margin_10"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlSelectLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlToolbar">
+
+        <ImageView
+            android:id="@+id/ivSelectLanguage"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_select_language" />
+
+        <TextView
+            android:id="@+id/tvSelectLanguage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/ivSelectLanguage"
+            android:text="@string/settings_select_language"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="6dp"
+            android:layout_height="9dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_path" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="10dp"
+        android:background="#33979797" />
+
+
+    <RelativeLayout
+        android:id="@+id/rlSupport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginEnd="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlToolbar">
+
+        <ImageView
+            android:id="@+id/ivSupport"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_support" />
+
+        <TextView
+            android:id="@+id/tvSupport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/ivSupport"
+            android:text="@string/settings_support"
+            android:fontFamily="@font/roboto_regular"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="6dp"
+            android:layout_height="9dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_path" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="10dp"
+        android:background="#33979797" />
+
+
+    <RelativeLayout
+        android:id="@+id/rlSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginEnd="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlToolbar">
+
+        <ImageView
+            android:id="@+id/ivSignIn"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_support" />
+
+        <TextView
+            android:id="@+id/tvSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/ivSignIn"
+            android:text="Регистрация"
+            android:fontFamily="@font/roboto_regular"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="6dp"
+            android:layout_height="9dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_path" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/sigInDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="10dp"
+        android:background="#33979797" />
+
+    <RelativeLayout
+        android:id="@+id/rlNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginEnd="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlToolbar">
+
+        <ImageView
+            android:id="@+id/ivNotification"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_notification" />
+
+        <TextView
+            android:id="@+id/tvNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/ivNotification"
+            android:text="@string/settings_notification"
+            android:fontFamily="@font/roboto_regular"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="6dp"
+            android:layout_height="9dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_path" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="10dp"
+        android:background="#33979797" />
+
+    <RelativeLayout
+        android:id="@+id/rlConfidentiality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginEnd="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlToolbar">
+
+        <ImageView
+            android:id="@+id/ivConfidentiality"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_confidentiality" />
+
+        <TextView
+            android:id="@+id/tvConfidentiality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:layout_toEndOf="@+id/ivConfidentiality"
+            android:text="@string/settings_confidentiality"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="6dp"
+            android:layout_height="9dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_path" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="10dp"
+        android:background="#33979797" />
+
+    <RelativeLayout
+        android:id="@+id/rlAboutApp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginEnd="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rlToolbar">
+
+        <ImageView
+            android:id="@+id/ivAboutApp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_about_app" />
+
+        <TextView
+            android:id="@+id/tvAboutApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/ivAboutApp"
+            android:text="@string/settings_about_app"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="6dp"
+            android:layout_height="9dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_path" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="10dp"
+        android:background="#33979797" />
+
+</LinearLayout>

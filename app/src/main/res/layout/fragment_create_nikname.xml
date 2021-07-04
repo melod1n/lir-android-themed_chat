@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/rlNameEnter"
+            android:layout_alignParentTop="true"
+            android:layout_marginHorizontal="@dimen/margin_30"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:lineHeight="28dp"
+            android:text="@string/sign_in_enter_name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/margin_16" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/rlNameEnter"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_marginHorizontal="25dp"
+            android:text="@string/sign_in_enter_name_label"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_12"/>
+
+        <RelativeLayout
+            android:id="@+id/rlNameEnter"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/margin_6"
+            android:layout_centerVertical="true"
+            android:layout_marginHorizontal="25dp"
+            android:background="@drawable/bg_sign_in">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLength="50"
+                android:maxLines="1"
+                android:backgroundTint="@color/transparent"
+                android:textCursorDrawable="@drawable/shape_cursor"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginEnd="@dimen/margin_30"
+                android:textColorHint="@color/white"
+                android:fontFamily="@font/roboto_regular"
+                android:hint="@string/sign_in_enter_name_hint"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_14" />
+
+            <ImageView
+                android:id="@+id/ivNext"
+                android:layout_width="26dp"
+                android:visibility="gone"
+                android:layout_height="26dp"
+                android:padding="5dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/margin_14"
+                android:rotation="180"
+                android:src="@drawable/ic_arrow_back" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

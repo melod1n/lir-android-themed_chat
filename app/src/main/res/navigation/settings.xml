@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/settings"
+    app:startDestination="@id/settingsFragment">
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.android.lir.screens.main.settings.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/toSignIn"
+            app:destination="@id/signIn" />
+    </fragment>
+    <include app:graph="@navigation/sign_in" />
+</navigation>

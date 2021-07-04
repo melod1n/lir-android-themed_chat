@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/signIn"
+    app:startDestination="@id/phoneFragment">
+
+    <fragment
+        android:id="@+id/phoneFragment"
+        android:name="com.android.lir.screens.signin.phone.PhoneFragment"
+        android:label="PhoneFragment">
+        <action
+            android:id="@+id/toNickName"
+            app:destination="@id/nicknameFragment" />
+        <action
+            android:id="@+id/toOtp"
+            app:destination="@id/otpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/otpFragment"
+        android:name="com.android.lir.screens.signin.otp.OtpFragment"
+        android:label="OtpFragment" />
+    <fragment
+        android:id="@+id/nicknameFragment"
+        android:name="com.android.lir.screens.signin.nickname.NicknameFragment"
+        android:label="NicknameFragment">
+        <action
+            android:id="@+id/toPhoto"
+            app:destination="@id/photoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.android.lir.screens.signin.photo.PhotoFragment"
+        android:label="PhotoFragment">
+        <action
+            android:id="@+id/toLoadDialog"
+            app:destination="@id/loadPhotoDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/loadPhotoDialog"
+        android:name="com.android.lir.screens.signin.photo.LoadPhotoDialog"
+        android:label="LoadPhotoDialog" />
+</navigation>

@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:menu="@menu/thematic_chat"
+                app:navigationIcon="@drawable/ic_arrow_back" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:id="@+id/photoContainer"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="16dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/bg_rounded_white" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/icon"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_gravity="center"
+                        android:padding="16dp"
+                        android:src="@drawable/thematic_chat_donut" />
+
+                </FrameLayout>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_toEndOf="@+id/photoContainer"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-4dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@android:color/black"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        tools:text="Прогулка с собаками" />
+
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:drawablePadding="4dp"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:gravity="center_vertical"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_location_on_24"
+                        app:drawableTint="#C80808"
+                        tools:text="г. Москва" />
+
+                    <TextView
+                        android:id="@+id/phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp"
+                        app:drawableStartCompat="@drawable/ic_baseline_call_24"
+                        app:drawableTint="#0FD10F"
+                        tools:text="8 (929) 825-76-45" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </RelativeLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatRatingBar
+                        android:id="@+id/rating"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5"
+                        android:progressTint="#F17F1C"
+                        android:stepSize="0.01"
+                        tools:rating="4.0" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/ratingText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@android:color/black"
+                        tools:text="4.0" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:text="Подписаться"
+                    android:textAllCaps="false"
+                    app:backgroundTint="#FF9500" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="4K"
+                    android:textColor="@color/end_color_gradient"
+                    android:textStyle="bold" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp">
+
+                    <ImageView
+                        android:id="@+id/icon1"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginEnd="40dp"
+                        android:background="@drawable/bg_rounded_white"
+                        android:src="@drawable/ic_oval_2"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/icon2"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/bg_rounded_white"
+                        android:src="@drawable/ic_oval_2"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/icon3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/bg_rounded_white"
+                        android:src="@drawable/ic_oval_2"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <TextView
+                android:id="@+id/advertisementTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:text="Реклама"
+                android:textColor="@color/end_color_gradient" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="260dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="22dp"
+                        app:cardCornerRadius="4dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ad1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@color/end_color_gradient" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="260dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="8dp"
+                        app:cardBackgroundColor="@color/end_color_gradient"
+                        app:cardCornerRadius="4dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ad2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@color/end_color_gradient" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </HorizontalScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginVertical="12dp"
+                android:background="#cccccc" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Фото и видео"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="См. все" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/photos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:scrollbars="none"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="10"
+                tools:listitem="@layout/item_thematic_chat_photo" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addPhotos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="12dp"
+                android:text="Добавить"
+                android:textColor="#8E8E93"
+                app:backgroundTint="#EFEFF4"
+                app:icon="@drawable/ic_baseline_photo_camera_24"
+                app:iconGravity="textStart"
+                app:iconTint="#8E8E93" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginVertical="6dp"
+                android:background="#cccccc" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/authorUserIcon"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="22dp"
+                    android:scaleType="centerCrop"
+                    android:src="@android:color/darker_gray"
+                    app:shapeAppearanceOverlay="@style/CircleImageView_56" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Андрей"
+                            android:textAppearance="?android:textAppearanceMedium"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:text="08 июня 2020, 16:40" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="12dp"
+                            android:layout_weight="0"
+                            android:src="@drawable/ic_baseline_more_vert_24"
+                            android:tint="?android:textColorSecondary" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="4dp"
+                        android:text="Люблю собак. Кинолог" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="12dp"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed suscipit est dapibus scelerisque condimentum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus facilisis lobortis risus, sed commodo orci. Aenean ut felis tempor, ullamcorper orci id, congue lectus. Praesent augue purus, tincidunt sit amet egestas vestibulum, vehicula dapibus ante. Donec eget scelerisque neque. Phasellus nunc lorem, elementum non vestibulum eu, rutrum eget magna. Ut accumsan, massa sit amet ullamcorper dictum, lectus arcu pharetra quam, vel tincidunt dui mauris ac justo."
+                tools:visibility="gone" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/accept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="22dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Принять участие"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/green" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_toEndOf="@+id/accept"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ProgressBar
+                        android:id="@+id/progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:background="#194cd964"
+                        android:backgroundTint="#194cd964"
+                        android:max="10"
+                        android:progress="3"
+                        android:progressBackgroundTint="@color/green"
+                        android:progressTint="@color/green" />
+
+                    <TextView
+                        android:id="@+id/left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:letterSpacing="0.01"
+                        android:text="Осталось 3/10 мест "
+                        android:textColor="#4cd964"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginVertical="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#eeeeee"
+                app:strokeWidth="1dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/userIcon"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="bottom"
+                        android:scaleType="centerCrop"
+                        android:src="#ff00ff"
+                        app:shapeAppearanceOverlay="@style/CircleImageView_36" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/commentMessage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="Новый комментарий" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/attachPhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginBottom="6dp"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_baseline_attach_file_24"
+                        android:tint="#eeeeee" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/send"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="6dp"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_baseline_send_24"
+                        android:tint="@color/end_color_gradient" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_comment" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</layout>

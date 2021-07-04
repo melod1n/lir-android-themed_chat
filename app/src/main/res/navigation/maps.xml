@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/maps"
+    app:startDestination="@id/mapsFragment">
+
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.android.lir.screens.main.map.MapsFragment"
+        android:label="MapsFragment" />
+
+    <dialog
+        android:id="@+id/createChatDialog"
+        android:name="com.android.lir.screens.main.map.createchat.CreateChatDialog"
+        android:label="CreateChatDialog" />
+
+    <action
+        android:id="@+id/toCreateChatDialog"
+        app:destination="@id/createChatDialog" />
+
+    <dialog
+        android:id="@+id/easyChatDialogNew"
+        android:name="com.android.lir.screens.main.map.easychatnew.EasyChatDialog"
+        android:label="EasyChatDialogNew" />
+
+    <action
+        android:id="@+id/toEasyChatDialog"
+        app:destination="@id/easyChatDialogNew" />
+
+    <dialog
+        android:id="@+id/thematicChatActivityNew"
+        android:name="com.android.lir.screens.main.thematic.ThematicChatCreateDialog"
+        android:label="ThematicChatCreateDialog" />
+
+    <action
+        android:id="@+id/toThematicChatCreateDialog"
+        app:destination="@+id/thematicChatActivityNew" />
+
+    <dialog
+        android:id="@+id/thematicChatComments"
+        android:name="com.android.lir.screens.main.thematic.ThematicChatCommentsDialog"
+        android:label="ThematicChatCommentsDialog" />
+
+    <action
+        android:id="@+id/toThematicChatCommentsDialog"
+        app:destination="@+id/thematicChatComments" />
+
+    <dialog
+        android:id="@+id/thematicChatAvatarDialog"
+        android:name="com.android.lir.screens.main.thematic.ThematicChatPickChatAvatarDialog"
+        android:label="ThematicChatCommentsDialog" />
+
+    <action
+        android:id="@+id/toThematicChatAvatarDialog"
+        app:destination="@+id/thematicChatAvatarDialog" />
+
+</navigation>

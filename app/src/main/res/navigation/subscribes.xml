@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/subscribes"
+    app:startDestination="@id/subscriptionsFragment">
+
+    <fragment
+        android:id="@+id/subscriptionsFragment"
+        android:name="com.android.lir.screens.main.subscribe.SubscriptionsFragment"
+        android:label="SubscriptionsFragment" />
+</navigation>

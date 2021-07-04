@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".screens.main.contacts.contactscreen.ContactsFragment">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/toolbar_gradient"
+        android:elevation="@dimen/margin_4"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/view_search" />
+    </RelativeLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:elevation="0dp">
+
+            <LinearLayout
+                android:id="@+id/favBlock"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/favActions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="2dp"
+                        android:layout_weight="1"
+                        android:text="Сообщение"
+                        android:textAllCaps="false"
+                        android:textColor="@color/end_color_gradient"
+                        android:textSize="7.8sp"
+                        app:icon="@drawable/ic_baseline_message_24"
+                        app:iconGravity="textTop"
+                        app:iconSize="@dimen/margin_16"
+                        app:iconTint="@color/end_color_gradient"
+                        app:strokeWidth="0dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Позвонить"
+                        android:textAllCaps="false"
+                        android:textColor="@color/end_color_gradient"
+                        android:textSize="8sp"
+                        app:icon="@drawable/ic_baseline_call_24"
+                        app:iconGravity="textTop"
+                        app:iconSize="@dimen/margin_16"
+                        app:iconTint="@color/end_color_gradient"
+                        app:strokeWidth="0dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:text="Редакт."
+                        android:textAllCaps="false"
+                        android:textColor="@color/end_color_gradient"
+                        android:textSize="8sp"
+                        app:icon="@drawable/ic_baseline_edit_24"
+                        app:iconGravity="textTop"
+                        app:iconSize="@dimen/margin_16"
+                        app:iconTint="@color/end_color_gradient"
+                        app:strokeWidth="0dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/favorite"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="Избранное"
+                        android:textAllCaps="false"
+                        android:textColor="@color/end_color_gradient"
+                        android:textSize="8sp"
+                        app:icon="@drawable/ic_baseline_favorite_24"
+                        app:iconGravity="textTop"
+                        app:iconSize="16dp"
+                        app:iconTint="@color/end_color_gradient"
+                        app:strokeWidth="0dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:text="Удалить"
+                        android:textAllCaps="false"
+                        android:textColor="@color/end_color_gradient"
+                        android:textSize="8sp"
+                        android:visibility="gone"
+                        app:icon="@drawable/ic_baseline_trash_black_24"
+                        app:iconGravity="textTop"
+                        app:iconSize="@dimen/margin_16"
+                        app:iconTint="@color/end_color_gradient"
+                        app:strokeWidth="0dp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TextView
+                    android:id="@+id/message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:layout_marginTop="@dimen/margin_16"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Избранные"
+                    android:textColor="@color/purple"
+                    android:textSize="@dimen/text_size_12" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/favorites"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:orientation="horizontal"
+                    android:overScrollMode="never"
+                    android:paddingBottom="@dimen/margin_12"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="100"
+                    tools:listitem="@layout/favorites_item" />
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contacts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:itemCount="100"
+            tools:listitem="@layout/row_contact_item" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <com.reddit.indicatorfastscroll.FastScrollerView
+            android:id="@+id/fastscroller"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

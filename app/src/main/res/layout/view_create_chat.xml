@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@drawable/bg_rounded_top"
+    android:orientation="horizontal"
+    android:baselineAligned="false">
+
+    <LinearLayout
+        android:id="@+id/llCreateEasyChat"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:src="@drawable/ic_easy" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/chat_chat"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llCreateThemedChat"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/margin_30"
+        android:paddingBottom="@dimen/margin_24">
+
+        <ImageView
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:src="@drawable/ic_themmed" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/chat_themed"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llCreateChatChannel"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:src="@drawable/ic_easy" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/chat_channel"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llCreateCommercialChat"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:src="@drawable/ic_commercial" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_8"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/chat_commercial"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_12" />
+
+    </LinearLayout>
+
+</LinearLayout>

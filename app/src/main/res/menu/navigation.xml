@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/maps"
+        android:icon="@drawable/selector_map"
+        android:enabled="true"
+        android:title="@string/title_map" />
+
+    <item
+        android:id="@+id/contacts"
+        android:icon="@drawable/selector_contact"
+        android:enabled="true"
+        android:title="@string/title_contact" />
+
+    <item
+        android:id="@+id/chats"
+        android:icon="@drawable/selector_chat"
+        android:title="@string/title_chat" />
+
+    <item
+        android:id="@+id/subscribes"
+        android:icon="@drawable/selector_subscriptions"
+        android:title="@string/title_subscriptions" />
+
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/selector_settings"
+        android:title="@string/title_settings" />
+
+</menu>

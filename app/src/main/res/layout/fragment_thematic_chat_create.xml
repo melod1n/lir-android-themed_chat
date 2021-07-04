@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="ЛИР" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="32dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/picture"
+                        android:layout_width="92dp"
+                        android:layout_height="92dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_add_chat_picture" />
+
+                </FrameLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="48dp"
+                    android:text="Название чата"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:maxLength="80"
+                    android:maxLines="1"
+                    android:textColor="@color/dark_grey" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Описание"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="350"
+                    android:textColor="@color/dark_grey" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Телефон"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.android.lir.widget.PhoneNumberEditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="+7"
+                    android:textColor="@color/dark_grey"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Адрес"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dark_grey" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Фотографии"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:id="@+id/addPhoto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="4dp">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:layout_width="92dp"
+                                android:layout_height="92dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/ic_add_photo_gradient"
+                                app:shapeAppearanceOverlay="@style/RoundedImageView_24" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_only_plus"
+                                android:visibility="visible" />
+
+                        </FrameLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/photos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:scrollbars="none"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:itemCount="10"
+                            tools:listitem="@layout/item_thematic_chat_photo" />
+
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Участники"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:fillViewport="true"
+                    android:scrollbars="none"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/chatUsers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="12dp"
+                            android:src="#ffff00"
+                            app:shapeAppearanceOverlay="@style/CircleImageView_56" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="12dp"
+                            android:src="#ff0000"
+                            app:shapeAppearanceOverlay="@style/CircleImageView_56" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="12dp"
+                            android:src="#0000ff"
+                            app:shapeAppearanceOverlay="@style/CircleImageView_56" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="12dp"
+                            android:src="#ffff00"
+                            app:shapeAppearanceOverlay="@style/CircleImageView_56" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="12dp"
+                            android:src="#ff0000"
+                            app:shapeAppearanceOverlay="@style/CircleImageView_56" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="12dp"
+                            android:src="#0000ff"
+                            app:shapeAppearanceOverlay="@style/CircleImageView_56" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="12dp"
+                            android:src="#ffff00"
+                            app:shapeAppearanceOverlay="@style/CircleImageView_56" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="12dp"
+                            android:src="#ff0000"
+                            app:shapeAppearanceOverlay="@style/CircleImageView_56" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="12dp"
+                            android:src="#0000ff"
+                            app:shapeAppearanceOverlay="@style/CircleImageView_56" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="12dp"
+                            android:src="#00ffff"
+                            app:shapeAppearanceOverlay="@style/CircleImageView_56" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="12dp"
+                            android:src="#ff00ff"
+                            app:shapeAppearanceOverlay="@style/CircleImageView_56" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="12dp"
+                            android:src="#ffff00"
+                            app:shapeAppearanceOverlay="@style/CircleImageView_56" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </HorizontalScrollView>
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Запретить комментарии"
+                    android:textColor="@color/end_color_gradient"
+                    android:textSize="18sp"
+                    app:buttonTint="@color/end_color_gradient" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/create"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="16dp"
+                    android:background="@drawable/background_gradient_ripple"
+                    android:text="Создать"
+                    android:textColor="@android:color/white" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

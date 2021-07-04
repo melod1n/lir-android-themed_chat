@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/rlEnterOtp"
+            android:layout_alignParentTop="true"
+            android:layout_marginHorizontal="@dimen/margin_30"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:lineHeight="28dp"
+            android:text="@string/sign_in_enter_otp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/margin_16" />
+
+        <LinearLayout
+            android:id="@+id/rlEnterOtp"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etFirst"
+                android:layout_width="40dp"
+                android:maxLength="1"
+                android:layout_height="48dp"
+                android:maxLines="1"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:inputType="number"
+                android:background="@drawable/shape_empty_field"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <EditText
+                android:id="@+id/etSecond"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:maxLength="1"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:maxLines="1"
+                android:inputType="number"
+                android:background="@drawable/shape_empty_field"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <EditText
+                android:id="@+id/etThird"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:maxLength="1"
+                android:inputType="number"
+                android:maxLines="1"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:background="@drawable/shape_empty_field"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <EditText
+                android:id="@+id/etFourth"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:maxLength="1"
+                android:inputType="number"
+                android:maxLines="1"
+                android:background="@drawable/shape_empty_field"
+                android:fontFamily="@font/roboto_bold"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlEnterOtp"
+            android:layout_marginTop="52dp"
+            android:gravity="center"
+            android:text="@string/sign_in_resend_otp_after"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14" />
+
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

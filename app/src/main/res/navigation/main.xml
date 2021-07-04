@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main"
+    app:startDestination="@id/splashFragment2">
+
+    <fragment
+        android:id="@+id/splashFragment2"
+        android:name="com.android.lir.screens.splash.SplashFragment"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/toMain"
+            app:destination="@id/mainContainer"
+            app:popUpTo="@id/splashFragment2"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/mainContainer"
+        android:name="com.android.lir.screens.main.MainContainer"
+        android:label="MainContainer" >
+    </fragment>
+    <fragment
+        android:id="@+id/exitConfirmDialog"
+        android:name="com.android.lir.common.ExitConfirmDialog"
+        android:label="ExitConfirmDialog" />
+
+    <action
+        android:id="@+id/action_global_exitConfirmDialog"
+        app:destination="@id/exitConfirmDialog"/>
+
+</navigation>

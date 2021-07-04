@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="0dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/selected"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+
+            android:src="@drawable/ic_tintable_line"
+            tools:tint="#ff00ff" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icon"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_gravity="center"
+            android:padding="12dp"
+            tools:src="@drawable/thematic_chat_donut" />
+
+
+    </FrameLayout>
+
+
+</layout>
