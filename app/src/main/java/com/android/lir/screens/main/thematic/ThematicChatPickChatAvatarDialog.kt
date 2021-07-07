@@ -102,7 +102,7 @@ class PickAvatarAdapter(
             binding.selected.imageTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(
                     context,
-                    if (item.isSelected) R.color.green else R.color.grey
+                    if (item.isSelected) R.color.point_color else R.color.grey
                 )
             )
         }

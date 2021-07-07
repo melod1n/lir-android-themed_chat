@@ -32,8 +32,10 @@ import com.android.lir.dataclases.ThematicChatInfo
 import com.android.lir.utils.AndroidUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.chat_view.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.withContext
 import java.util.*
 
 
@@ -53,6 +55,8 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
 
     private var remainPictures = -1
 
+    private var isCommercial = false
+
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             Log.d("PICK_IMAGE", "RESULT: $uri")
@@ -70,6 +74,7 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        isCommercial = requireArguments().getBoolean("isCommercial", false)
         isCreating = requireArguments().getBoolean("isCreate", true)
 
         chat = requireArguments().getParcelable("chat") as? ThematicChat
@@ -83,11 +88,12 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
 
         binding.address.setText(viewModel.loadAddress(requireContext(), coordinates))
 
+        binding.restrictComments.isVisible = isCommercial
+
         binding.toolbar.setNavigationOnClickListener { dismiss() }
 
 //        var imageResId = AppGlobal.thematicChatAvatars.random()
         var imageIndex = -1
-
 
         binding.picture.setOnClickListener {
 //            val imageIndex = AppGlobal.thematicChatAvatars.indexOf(imageResId)
@@ -100,6 +106,7 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
 
         setFragmentResultListener("image_index") { _, bundle ->
             val index = bundle["index"] as Int
+            if (index == -1) return@setFragmentResultListener
 //            imageResId = AppGlobal.thematicChatAvatars[index]
             imageIndex = index
             loadPicture(AppGlobal.thematicChatAvatars[index])
@@ -125,8 +132,9 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
             val description = binding.description.text.toString().trim()
             val phone = binding.phone.text.toString().trim()
             val address = binding.address.text.toString().trim()
+            val usersCountString = binding.usersCount.text.toString().trim()
 
-            if (title.isEmpty() || description.isEmpty() || phone.isEmpty() || address.isEmpty() || imageIndex == -1)
+            if (title.isEmpty() || description.isEmpty() || phone.isEmpty() || address.isEmpty() || imageIndex == -1 || usersCountString.isEmpty())
                 return@setOnClickListener
 
             viewModel.createThematicChat(
@@ -135,7 +143,8 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
                 phone,
                 address,
                 imageIndex,
-                coordinates
+                coordinates,
+                usersCountString.toIntOrNull() ?: -1
             )
         }
 
@@ -161,7 +170,7 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
         }
     }
 
-    private fun loadPictures(chatId: Int) {
+    private suspend fun loadPictures(chatId: Int) {
         val values = adapter.values.value ?: listOf()
 
         remainPictures = values.count()
@@ -170,43 +179,41 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
             dismiss()
             return
         }
-//
-//        binding.addPhoto.isEnabled = false
-//        binding.create.isEnabled = false
 
         Toast.makeText(requireContext(), "Идёт обработка фотографий", Toast.LENGTH_LONG).show()
-        Thread {
+
+        withContext(Dispatchers.Default) {
             values.forEach {
                 it.first?.let { drawable ->
                     val bitmap = AndroidUtils.compressDrawable(drawable)
                     viewModel.uploadImage(chatId, bitmap)
                 }
             }
-        }.start()
-
+        }
     }
 
     private fun deleteLastPicture(error: String) {
-        adapter.remove(adapter.values.value?.last()!!)
-        adapter.notifyDataSetChanged()
+        adapter.values.value?.last()?.let {
+            adapter.remove(it)
+            adapter.notifyDataSetChanged()
 
-        Toast.makeText(requireContext(), "Произошла ошибка", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Произошла ошибка", Toast.LENGTH_LONG).show()
+        }
+
     }
 
-    private fun showSuccessUploadToast() {
-//        Toast.makeText(
-//            requireContext(),
-//            "Фотография загружена",
-//            Toast.LENGTH_LONG
-//        ).show()
+    private suspend fun showSuccessUploadToast() {
         remainPictures--
 
         if (remainPictures == 0) {
-            lifecycleScope.launchWhenResumed {
+            withContext(Dispatchers.Main) {
                 Toast.makeText(requireContext(), "Фотографии загружены", Toast.LENGTH_LONG).show()
-            }
 
-            dismiss()
+                with(findNavController()) {
+                    navigateUp()
+                    navigate(R.id.toThematicChatCommentsDialog, requireArguments())
+                }
+            }
         }
     }
 

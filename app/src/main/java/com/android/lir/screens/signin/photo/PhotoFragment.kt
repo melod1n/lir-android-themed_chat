@@ -23,8 +23,11 @@ import com.android.lir.utils.AppExtensions.toBitMap
 import com.github.florent37.runtimepermission.kotlin.askPermission
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_load_photo.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class PhotoFragment : BaseVMFragment<PhotoViewModel>(R.layout.fragment_load_photo) {
@@ -38,19 +41,25 @@ class PhotoFragment : BaseVMFragment<PhotoViewModel>(R.layout.fragment_load_phot
         super.onViewCreated(view, savedInstanceState)
         setFragmentResultListener("photo_result") { _, bundle ->
             when (bundle.getInt("type")) {
-                1-> hasCameraPermission()
-                2-> hasStoragePermission()
+                1 -> hasCameraPermission()
+                2 -> hasStoragePermission()
             }
         }
         phone = arguments?.getString("phoneNumber") ?: ""
         nickName = arguments?.getString("userName") ?: ""
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.image.onEach {onBitMapChanged(it)}.collect()
+            viewModel.image.onEach { onBitMapChanged(it) }.collect()
         }
         tvNext.setOnClickListener {
-            viewModel.image.value?.compressBitmap()?.toBase64()?.let {
-                viewModel.regUser(phone, nickName, it)
-            } ?: showInfoDialog(null, "Что-то пошло не так")
+            lifecycleScope.launch {
+                val image = viewModel.image.value?.compressBitmap()?.toBase64()
+                if (image == null) {
+                    withContext(Dispatchers.Main) { showInfoDialog(null, "Что-то пошло не так") }
+                } else {
+                    viewModel.regUser(phone, nickName, image)
+                }
+            }
+
         }
         ivAddPhoto.setOnClickListener { showLoadImageDialog() }
     }
@@ -69,13 +78,12 @@ class PhotoFragment : BaseVMFragment<PhotoViewModel>(R.layout.fragment_load_phot
     }
 
     private fun onBitMapChanged(bm: Bitmap?) {
-        if(bm != null)
-            ivAddPhoto.setImageBitmap(bm)
+        if (bm != null) ivAddPhoto.setImageBitmap(bm)
         tvNext.isVisible = bm != null
     }
 
-    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()){
-        context?.toBitMap(it)?.let{bm ->
+    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
+        context?.toBitMap(it)?.let { bm ->
             viewModel.saveBitMap(bm)
         }
     }
@@ -83,7 +91,7 @@ class PhotoFragment : BaseVMFragment<PhotoViewModel>(R.layout.fragment_load_phot
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == 11) {
-            (data?.extras?.get("data") as? Bitmap)?.let{
+            (data?.extras?.get("data") as? Bitmap)?.let {
                 viewModel.saveBitMap(it)
             }
         }
@@ -116,7 +124,7 @@ class PhotoFragment : BaseVMFragment<PhotoViewModel>(R.layout.fragment_load_phot
 
     override fun onEvent(event: Event) {
         super.onEvent(event)
-        when(event) {
+        when (event) {
             is PopToPhone -> popToPhone()
         }
     }

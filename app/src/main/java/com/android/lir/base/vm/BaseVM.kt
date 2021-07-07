@@ -19,12 +19,12 @@ open class BaseVM : ViewModel() {
         onStart: (suspend () -> Unit)? = null,
         onEnd: (suspend () -> Unit)? = null,
         onError: (suspend (String) -> Unit)? = null
-    ) : Job = viewModelScope.launch {
+    ): Job = viewModelScope.launch {
         onStart?.invoke()
-        when(val response = job()) {
+        when (val response = job()) {
             is Answer.Success -> onAnswer(response.data)
             is Answer.Error -> onError?.invoke(response.errorString) ?: tasksEventChannel.send(
-                ShowInfoDialogEvent(null,response.errorString)
+                ShowInfoDialogEvent(null, response.errorString)
             )
         }
     }.also { it.invokeOnCompletion { viewModelScope.launch { onEnd?.invoke() } } }

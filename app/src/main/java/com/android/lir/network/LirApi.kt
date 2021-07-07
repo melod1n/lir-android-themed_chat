@@ -128,6 +128,7 @@ interface LirApi {
         @Field("address") address: String,
         @Field("coordinates") coordinates: String,
         @Field("avatar_num") avatarNumber: Int,
+        @Field("user_count") usersCount: Int,
         @Field("token") token: String
     ): Answer<CreateThematicChatResponse>
 
@@ -155,4 +156,19 @@ interface LirApi {
         @Field("image") image: String,
         @Field("token") token: String
     ): Answer<AddPhotoToChatResponse>
+
+    @FormUrlEncoded
+    @POST(Urls.addPhotoToComment)
+    suspend fun addPhotoToComment(
+        @Field("thematicchatmessage_id") messageId: Int,
+        @Field("image") image: String,
+        @Field("token") token: String
+    ): Answer<AddPhotoToCommentResponse>
+
+    @FormUrlEncoded
+    @POST(Urls.addUserToChat)
+    suspend fun addUserToChat(
+        @Field("chat_id") chatId: Int,
+        @Field("token") token: String
+    ): Answer<AddUserToChatResponse>
 }

@@ -58,11 +58,6 @@ class MapsVM @Inject constructor(
                         return@OnMarkerClickListener true
                     }
 
-
-//                    it.tag?.toString()?.toChat()?.let {
-//
-//                    }
-
                     return@OnMarkerClickListener false
                 }
             )
@@ -137,8 +132,7 @@ class MapsVM @Inject constructor(
                         removeMarkersByContainsTag("my_location")
                         putMarkerOnMap(
                             LatLng(location.latitude, location.longitude),
-                            it,
-                            "my_location"
+                            it, "my_location"
                         )
                     }
                     moveCamera(LatLng(location.latitude, location.longitude))
@@ -151,7 +145,7 @@ class MapsVM @Inject constructor(
         }
     }
 
-    private fun removeMarkersByContainsTag(str: String) {
+    fun removeMarkersByContainsTag(str: String) {
         markers.filter { it.tag.toString().contains(str) }.forEach { it.remove() }
     }
 
@@ -162,7 +156,7 @@ class MapsVM @Inject constructor(
         }
     }
 
-    private fun moveCamera(point: LatLng, zoom: Float = 15f) {
+    fun moveCamera(point: LatLng, zoom: Float = 15f) {
         map?.animateCamera(CameraUpdateFactory.newLatLngZoom(point, zoom))
     }
 
@@ -178,6 +172,14 @@ class MapsVM @Inject constructor(
         val lng = coordinates.substringAfter("_").toDoubleOrNull() ?: 0.0
         val icon = generateIcon(R.drawable.ic_chat_themed) ?: return
         putMarkerOnMap(LatLng(lat, lng), icon, "chat_thematic")
+    }
+
+    fun addPointImage(coordinates: String, anotherTag: String? = null) {
+        val lat = coordinates.substringBefore("_").toDoubleOrNull() ?: 0.0
+        val lng = coordinates.substringAfter("_").toDoubleOrNull() ?: 0.0
+        val icon = generateIcon(R.drawable.ic_baseline_location_on_24) ?: return
+
+        putMarkerOnMap(LatLng(lat, lng), icon, anotherTag ?: "simple_point")
     }
 }
 

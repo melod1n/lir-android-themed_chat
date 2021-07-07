@@ -36,18 +36,26 @@ class ChatDetailFragment : BaseVMFragment<ChatDetailVM>(R.layout.chat_detail_fra
     }
 
     private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
-        context?.toBitMap(it)?.compressBitmap()?.let(viewModel::sendMessage)
+        lifecycleScope.launchWhenStarted {
+            context?.toBitMap(it)?.compressBitmap()?.let(viewModel::sendMessage)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.partnerId ?: run { viewModel.setPartnerId(arguments?.getInt("chat_id") ?: 0) }
+
         btnSend.setOnClickListener { viewModel.sendMessage() }
         btnAdd.setOnClickListener { pickImage.launch("image/*") }
+
         back.setOnClickListener { findNavController().popBackStack() }
-        rvMessages.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+
+        (rvMessages.layoutManager as LinearLayoutManager).reverseLayout = true
         rvMessages.adapter = adapter
+
         etMessage.doAfterTextChanged { viewModel.onMessageChanged(it?.toString()) }
+
         viewModel.messages.observe(viewLifecycleOwner) {
             val oldSize = adapter.itemCount
             adapter.submitList(it)
@@ -68,6 +76,7 @@ class ChatDetailFragment : BaseVMFragment<ChatDetailVM>(R.layout.chat_detail_fra
             is ClearEvent -> etMessage.setText(null)
             is LogOutEvent -> {
                 showInfoDialog(null, "Авторизуйтесь для отправки приватных сообщений")
+
                 findNavController().popBackStack()
             }
             is PutPartnerInfoEvent -> {

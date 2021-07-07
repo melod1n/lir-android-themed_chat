@@ -1,5 +1,6 @@
 package com.android.lir.utils
 
+import android.util.Log
 import okhttp3.Request
 import okio.Timeout
 import retrofit2.*
@@ -7,8 +8,12 @@ import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
 
-class ResultCallFactory : CallAdapter.Factory()  {
-    override fun get(returnType: Type, annotations: Array<out Annotation>, retrofit: Retrofit): CallAdapter<*, *>? {
+class ResultCallFactory : CallAdapter.Factory() {
+    override fun get(
+        returnType: Type,
+        annotations: Array<out Annotation>,
+        retrofit: Retrofit
+    ): CallAdapter<*, *>? {
         val rawReturnType: Class<*> = getRawType(returnType)
         if (rawReturnType == Call::class.java) {
             if (returnType is ParameterizedType) {
@@ -72,16 +77,21 @@ internal class ResultCall<T>(proxy: Call<T>) : CallDelegate<T, Answer<T>>(proxy)
         override fun onResponse(call: Call<T>, response: Response<T>) {
             val result: Answer<T> = if (response.isSuccessful)
                 Answer.Success(response.body() as T)
-            else Answer.Error("Что-то пошло не так")
+            else Answer.Error(response.errorBody()?.string() ?: "")
+
             callback.onResponse(proxy, Response.success(result))
         }
 
         override fun onFailure(call: Call<T>, error: Throwable) {
-            val result = when (error) {
-                is HttpException -> Answer.Error("Что-то пошло не так")
-                else -> Answer.Error("Произошла ошибка")
-            }
-            callback.onResponse(proxy, Response.success(result))
+//            val result = when (error) {
+
+//                is HttpException -> Answer.Error("Что-то пошло не так")
+//                else -> Answer.Error("Произошла ошибка")
+//            }
+            callback.onResponse(
+                proxy,
+                Response.success(Answer.Error(Log.getStackTraceString(error)))
+            )
         }
     }
 

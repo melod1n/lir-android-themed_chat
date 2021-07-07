@@ -1,5 +1,6 @@
 package com.android.lir.screens.main.map.createchat
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -44,6 +45,11 @@ class CreateChatDialog : BottomSheetDialogFragment() {
             )
         )
         findNavController().navigateUp()
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        setFragmentResult("create_chat", bundleOf())
+        super.onDismiss(dialog)
     }
 }
 

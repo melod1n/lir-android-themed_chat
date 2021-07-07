@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/rootLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -114,6 +116,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    android:text="Количество пользователей"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/usersCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textColor="@color/dark_grey" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
                     android:text="Фотографии"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
@@ -122,6 +140,7 @@
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
                     android:scrollbars="none">
 
                     <LinearLayout
@@ -291,6 +310,7 @@
                 </HorizontalScrollView>
 
                 <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/restrictComments"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Запретить комментарии"
@@ -313,5 +333,4 @@
         </androidx.core.widget.NestedScrollView>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-
 </layout>

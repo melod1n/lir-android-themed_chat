@@ -9,9 +9,12 @@ import coil.load
 import com.android.lir.base.adapter.BaseAdapter
 import com.android.lir.base.adapter.BindingHolder
 import com.android.lir.databinding.ItemThematicChatPhotoBinding
+import javax.inject.Inject
 
-class ThematicChatPicturesAdapter(context: Context, images: ArrayList<Pair<Drawable?, String?>>) :
-    BaseAdapter<Pair<Drawable?, String?>, ThematicChatPicturesAdapter.Holder>(context, images) {
+class ThematicChatPicturesAdapter @Inject constructor(
+    context: Context,
+    images: ArrayList<Pair<Drawable?, String?>>
+) : BaseAdapter<Pair<Drawable?, String?>, ThematicChatPicturesAdapter.Holder>(context, images) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemThematicChatPhotoBinding.inflate(inflater, parent, false)

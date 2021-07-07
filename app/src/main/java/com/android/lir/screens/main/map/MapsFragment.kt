@@ -1,13 +1,17 @@
 package com.android.lir.screens.main.map
 
 import android.Manifest
-import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Rect
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -16,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import com.android.lir.R
 import com.android.lir.base.vm.BaseVMFragment
 import com.android.lir.base.vm.Event
+import com.android.lir.common.AppGlobal
 import com.android.lir.dataclases.Chat
 import com.android.lir.dataclases.ThematicChatInfo
 import com.android.lir.screens.main.map.createchat.ChatType
@@ -37,6 +42,7 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         view.viewTreeObserver.addOnGlobalLayoutListener {
             val r = Rect()
 
@@ -53,6 +59,15 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
             mapFragment?.getMapAsync(this)
         }
 
+        etSearch.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                search()
+                return@setOnEditorActionListener true
+            }
+
+            false
+        }
+
         lifecycleScope.launchWhenStarted {
             etSearch.text = null
         }
@@ -61,7 +76,25 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
         ivZoomMinus.setOnClickListener { viewModel.map?.animateCamera(CameraUpdateFactory.zoomOut()) }
 
         setFragmentResultListener("create_chat") { _, bundle ->
-            when (val type = bundle.getParcelable<ChatType>("chat_type")) {
+            viewModel.removeMarkersByContainsTag("simple_point")
+
+            val type = bundle.getParcelable<ChatType>("chat_type")
+
+            when (type) {
+                ChatType.THEMED, ChatType.CHANNEL, ChatType.EASY, ChatType.COMMERCIAL -> {
+                    if (AppGlobal.shared.dataManager.token.isBlank()) {
+                        AlertDialog.Builder(requireContext())
+                            .setMessage("Для того, чтобы создать чат, вам необходимо атворизоваться")
+                            .setPositiveButton("Ок", null)
+                            .show()
+
+                        findNavController().navigateUp()
+                        return@setFragmentResultListener
+                    }
+                }
+            }
+
+            when (type) {
                 ChatType.THEMED -> showThemedChat(
                     isCreate = true,
                     type = type,
@@ -76,6 +109,7 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
                     isCreate = true,
                     type = type,
                     coordinates = bundle.getString("coordinates") ?: "",
+                    isCommercial = true
                 )
             }
         }
@@ -83,6 +117,7 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
         setFragmentResultListener("update") { _, _ ->
             viewModel.getAllChats(false)
             viewModel.getAllThematicChats(false)
+            viewModel.removeMarkersByContainsTag("simple_point")
         }
 
         getDeviceLocation()
@@ -90,10 +125,49 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
         ivGps.setOnClickListener { getDeviceLocation() }
     }
 
+    private fun search() {
+        viewModel.removeMarkersByContainsTag("search")
+
+        val addresses = searchAddresses()
+        if (addresses.isEmpty()) {
+            Toast.makeText(requireContext(), "Ничего не найдено", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        Toast.makeText(
+            requireContext(),
+            "Найдено результатов: ${addresses.count()}",
+            Toast.LENGTH_LONG
+        ).show()
+
+        val address = addresses[0]
+        val lat = address.latitude
+        val lon = address.longitude
+
+        viewModel.addPointImage("${lat}_${lon}", "search")
+        viewModel.moveCamera(LatLng(lat, lon))
+
+//        val strAddresses = arrayListOf<String>()
+//        addresses.forEach {
+//
+//            strAddresses.add(it.getAddressLine(0))
+//        }
+
+//        val address = addresses[0].getAddressLine(0)
+//        Log.d("SEARCH", "search: ${strAddresses.stream().collect(Collectors.joining(", "))}")
+    }
+
+    private fun searchAddresses(): List<Address> {
+        val geocoder = Geocoder(context, Locale.getDefault())
+
+        return geocoder.getFromLocationName(etSearch.text.toString().trim(), 100)
+    }
+
     private fun getDeviceLocation() {
         askPermission(Manifest.permission.ACCESS_FINE_LOCATION) {
             try {
                 val locationResult = viewModel.fusedLocationProviderClient.lastLocation
+
                 activity?.let { activity ->
                     locationResult.addOnCompleteListener(activity) { task ->
                         viewModel.locationReceived(task)
@@ -105,7 +179,7 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
         }.onDeclined { e ->
             viewModel.lastKnownLocation = null
             if (e.hasDenied()) {
-                AlertDialog.Builder(activity)
+                AlertDialog.Builder(requireContext())
                     .setMessage(getString(R.string.permission_need))
                     .setPositiveButton("Ок") { _, _ -> e.askAgain() }
                     .show()
@@ -159,6 +233,7 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
 
         googleMap.uiSettings.isCompassEnabled = false
         googleMap.setOnMapLongClickListener {
+            viewModel.addPointImage("${it.latitude}_${it.longitude}")
             createSelectChatTypeDialog(it)
         }
     }
@@ -195,7 +270,8 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
         info: ThematicChatInfo? = null,
         isCreate: Boolean = false,
         type: ChatType? = null,
-        coordinates: String = ""
+        coordinates: String = "",
+        isCommercial: Boolean = false
     ) {
         viewModel.addThematicChatImage(coordinates)
 
@@ -206,7 +282,8 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
                     "coordinates" to coordinates,
                     "isCreate" to isCreate,
                     "type" to type,
-                    "info" to info
+                    "info" to info,
+                    "isCommercial" to isCommercial
                 )
             )
             return

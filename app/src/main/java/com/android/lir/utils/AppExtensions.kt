@@ -27,6 +27,8 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 
 object AppExtensions {
@@ -86,13 +88,14 @@ object AppExtensions {
 
     fun String.ifBlankMakeNull(): String? = if (this.isBlank()) null else this
 
-    fun Bitmap.compressBitmap(): Bitmap? = try {
+    suspend fun Bitmap.compressBitmap() = suspendCoroutine<Bitmap> {
         val baos = ByteArrayOutputStream()
         this.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         if (baos.toByteArray().size / 1024 > 800) {
             baos.reset() //baosbaos
             this.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         }
+
         var isBm = ByteArrayInputStream(
             baos.toByteArray()
         )
@@ -113,9 +116,8 @@ object AppExtensions {
         if (be <= 0) be = 1
         newOpts.inSampleSize = be
         isBm = ByteArrayInputStream(baos.toByteArray())
-        BitmapFactory.decodeStream(isBm, null, newOpts)
-    } catch (e: Exception) {
-        e.printStackTrace(); null
+
+        it.resume(BitmapFactory.decodeStream(isBm, null, newOpts)!!)
     }
 
     fun Context.toBitMap(uri: Uri?): Bitmap? = when {
@@ -223,14 +225,14 @@ object AppExtensions {
     fun String.toChat(): Chat? = try {
         Gson().fromJson(this, Chat::class.java)
     } catch (e: Exception) {
-        e.printStackTrace()
+//        e.printStackTrace()
         null
     }
 
     fun String.toThematicChat(): ThematicChatInfo? = try {
         Gson().fromJson(this, ThematicChatInfo::class.java)
     } catch (e: Exception) {
-        e.printStackTrace()
+//        e.printStackTrace()
         null
     }
 }

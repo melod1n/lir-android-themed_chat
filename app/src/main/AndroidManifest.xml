@@ -74,6 +74,7 @@
 
         <activity android:name=".screens.main.thematic.ThematicChatCreateActivity" />
         <activity android:name=".screens.main.thematic.ThematicChatActivity" />
+        <activity android:name=".activity.ShowPhotoActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

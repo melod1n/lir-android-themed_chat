@@ -61,8 +61,18 @@ class AuthRepoImpl @Inject constructor(
         address: String,
         coordinates: String,
         avatarNumber: Int,
+        usersCount: Int,
         token: String
-    ) = api.createThematicChat(title, description, phone, address, coordinates, avatarNumber, token)
+    ) = api.createThematicChat(
+        title,
+        description,
+        phone,
+        address,
+        coordinates,
+        avatarNumber,
+        usersCount,
+        token
+    )
 
     override suspend fun addThematicMessage(
         chatId: Int,
@@ -82,4 +92,12 @@ class AuthRepoImpl @Inject constructor(
         token: String
     ) = api.addPhotoToChat(chatId, image, token)
 
+    override suspend fun addPhotoToComment(
+        messageId: Int,
+        image: String,
+        token: String
+    ) = api.addPhotoToComment(messageId, image, token)
+
+    override suspend fun addUserToChat(chatId: Int, token: String) =
+        api.addUserToChat(chatId, token)
 }

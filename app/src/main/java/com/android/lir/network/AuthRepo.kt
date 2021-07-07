@@ -60,6 +60,7 @@ interface AuthRepo {
         address: String,
         coordinates: String,
         avatarNumber: Int,
+        usersCount: Int,
         token: String,
     ): Answer<CreateThematicChatResponse>
 
@@ -81,4 +82,15 @@ interface AuthRepo {
         image: String,
         token: String
     ): Answer<AddPhotoToChatResponse>
+
+    suspend fun addPhotoToComment(
+        messageId: Int,
+        image: String,
+        token: String
+    ): Answer<AddPhotoToCommentResponse>
+
+    suspend fun addUserToChat(
+        chatId: Int,
+        token: String
+    ): Answer<AddUserToChatResponse>
 }

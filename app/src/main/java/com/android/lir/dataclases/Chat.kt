@@ -1,5 +1,6 @@
 package com.android.lir.dataclases
 
+import android.graphics.Bitmap
 import android.os.Parcelable
 import com.android.lir.screens.main.contacts.chatdetail.PrivateChatItem
 import com.android.lir.screens.main.map.createchat.ChatType
@@ -236,23 +237,37 @@ data class ThematicChatInfo(
     @SerializedName("address") var address: String,
     @SerializedName("phone") var phone: String = "",
     @SerializedName("coordinates") var coordinates: String?,
-    @SerializedName("avatar_num") var avatarNum: Int
+    @SerializedName("avatar_num") var avatarNum: Int,
+    @SerializedName("user_count") var usersCount: Int
 ) : Parcelable
 
 @Parcelize
 data class ThematicComment(
-    @SerializedName("id") var messageId: Int,
-    @SerializedName("thematicchat_id") var chatId: Int,
-    @SerializedName("text") var text: String,
-    @SerializedName("user_id") var userId: Int,
-    @SerializedName("created_at") var createdAt: String,
-    @SerializedName("updated_at") var updatedAt: String,
-    @SerializedName("user_photo") var userPhoto: String?,
-    @SerializedName("user_name") var userName: String?
+    @SerializedName("id") var messageId: Int = -1,
+    @SerializedName("thematicchat_id") var chatId: Int = -1,
+    @SerializedName("text") var text: String = "",
+    @SerializedName("user_id") var userId: Int = -1,
+    @SerializedName("created_at") var createdAt: String = "",
+    @SerializedName("updated_at") var updatedAt: String = "",
+    @SerializedName("user_photo") var userPhoto: String? = "",
+    @SerializedName("user_name") var userName: String? = "",
+    var photo: Bitmap? = null,
+    @SerializedName("images") var images: List<String> = listOf()
 ) : Parcelable
 
 @Parcelize
 data class AddPhotoToChatResponse(
     @SerializedName("error") var error: AlwaysString,
     @SerializedName("photo_id") var id: Int
+) : Parcelable
+
+@Parcelize
+data class AddPhotoToCommentResponse(
+    @SerializedName("error") var error: AlwaysString,
+    @SerializedName("photo_id") var photoId: Int
+) : Parcelable
+
+@Parcelize
+data class AddUserToChatResponse(
+    @SerializedName("error") var error: AlwaysString
 ) : Parcelable

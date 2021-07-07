@@ -16,10 +16,10 @@
     <color name="colorRed">#f54b5e</color>
 
 
-
-
     <color name="start_color_gradient">#c86dd7</color>
     <color name="end_color_gradient">#3023ae</color>
+
+    <color name="point_color">#5856D6</color>
 
 
     <color name="small_pink">#FF308F</color>

@@ -3,15 +3,14 @@ package com.android.lir.screens.main.thematic
 import android.content.Context
 import android.graphics.Bitmap
 import android.location.Geocoder
-import android.util.Base64
 import androidx.lifecycle.viewModelScope
 import com.android.lir.base.vm.BaseVM
 import com.android.lir.base.vm.Event
 import com.android.lir.common.AppGlobal
 import com.android.lir.network.AuthRepo
+import com.android.lir.utils.AndroidUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
 import java.util.*
 import javax.inject.Inject
 
@@ -26,7 +25,8 @@ class ThemedChatCreateVM @Inject constructor(
         phone: String,
         address: String,
         avatarNumber: Int,
-        coordinates: String
+        coordinates: String,
+        usersCount: Int
     ) = viewModelScope.launch {
         makeJob({
             repo.createThematicChat(
@@ -36,6 +36,7 @@ class ThemedChatCreateVM @Inject constructor(
                 address,
                 coordinates,
                 avatarNumber,
+                usersCount,
                 AppGlobal.shared.dataManager.token
             )
         },
@@ -56,17 +57,13 @@ class ThemedChatCreateVM @Inject constructor(
         return address
     }
 
-    fun uploadImage(chatId: Int, image: Bitmap) = viewModelScope.launch {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-
-        val imageBytes = byteArrayOutputStream.toByteArray()
-        val imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT)
+    fun uploadImage(chatId: Int, bitmap: Bitmap) = viewModelScope.launch {
+        val image = AndroidUtils.convertBitmapToBase64(bitmap)
 
         makeJob({
             repo.addPhotoToChat(
                 chatId = chatId,
-                image = imageString,
+                image = image,
                 token = AppGlobal.shared.dataManager.token
             )
         },
