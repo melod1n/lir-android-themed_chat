@@ -55,6 +55,7 @@
                         android:layout_marginHorizontal="2dp"
                         android:layout_weight="1"
                         android:singleLine="true"
+                        android:id="@+id/startMessage"
                         android:text="Сообщ."
                         android:textAllCaps="false"
                         android:textColor="@color/end_color_gradient"

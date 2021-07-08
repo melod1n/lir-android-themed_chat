@@ -30,6 +30,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_maps.*
 import kotlinx.android.synthetic.main.view_search.*
@@ -62,6 +63,7 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
         etSearch.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 search()
+                hideKeyboard()
                 return@setOnEditorActionListener true
             }
 
@@ -130,15 +132,16 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
 
         val addresses = searchAddresses()
         if (addresses.isEmpty()) {
-            Toast.makeText(requireContext(), "Ничего не найдено", Toast.LENGTH_LONG).show()
+            Snackbar.make(requireView(), "Ничего не найдено", Snackbar.LENGTH_LONG).show()
+                //            Toast.makeText(requireContext(), "Ничего не найдено", Toast.LENGTH_LONG).show()
             return
         }
 
-        Toast.makeText(
-            requireContext(),
-            "Найдено результатов: ${addresses.count()}",
-            Toast.LENGTH_LONG
-        ).show()
+//        Toast.makeText(
+//            requireContext(),
+//            "Найдено результатов: ${addresses.count()}",
+//            Toast.LENGTH_LONG
+//        ).show()
 
         val address = addresses[0]
         val lat = address.latitude

@@ -11,11 +11,11 @@ import javax.inject.Inject
 class PhoneViewModel @Inject constructor(
     private val repo: AuthRepo,
     private val dataManager: DataManager
-): BaseVM() {
+) : BaseVM() {
     fun checkUser(phone: String) {
-        makeJob({repo.checkUser(phone)}, onAnswer = {
-            if(!it.error.notFalse() && it.session.notFalse() && it.userId.notFalse()) {
-                dataManager.userId = it.userId.value
+        makeJob({ repo.checkUser(phone) }, onAnswer = {
+            if (!it.error.notFalse() && it.session.notFalse()) {
+                dataManager.userId = it.userId
                 dataManager.sessionId = it.session.value
                 tasksEventChannel.send(GoToCode)
             } else tasksEventChannel.send(GoToRegistration)
@@ -23,5 +23,5 @@ class PhoneViewModel @Inject constructor(
     }
 }
 
-object GoToCode: Event()
-object GoToRegistration: Event()
+object GoToCode : Event()
+object GoToRegistration : Event()

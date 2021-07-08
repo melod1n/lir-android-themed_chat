@@ -177,7 +177,8 @@ class MapsVM @Inject constructor(
     fun addPointImage(coordinates: String, anotherTag: String? = null) {
         val lat = coordinates.substringBefore("_").toDoubleOrNull() ?: 0.0
         val lng = coordinates.substringAfter("_").toDoubleOrNull() ?: 0.0
-        val icon = generateIcon(R.drawable.ic_baseline_location_on_24) ?: return
+//        val icon = generateIcon(R.drawable.ic_baseline_location_on_24) ?: return
+        val icon = generateIcon(R.drawable.ic_point_purple) ?: return
 
         putMarkerOnMap(LatLng(lat, lng), icon, anotherTag ?: "simple_point")
     }

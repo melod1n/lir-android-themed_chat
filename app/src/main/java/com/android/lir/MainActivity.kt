@@ -2,7 +2,6 @@ package com.android.lir
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.android.lir.data.DataManager
 import com.android.lir.network.AuthRepo
@@ -34,12 +33,12 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
 
         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
             FireBaseService.token = it.token
-            dataManager.userId.toIntOrNull()?.let { id ->
+            dataManager.userId.let { id ->
                 appScope.launch {
                     repo.sendFireBaseToken(id, it.token)
                 }
             }
-            Log.d("OkHttp"," TOKEN: ${it.token}")
+            Log.d("OkHttp", " TOKEN: ${it.token}")
         }
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
     }

@@ -30,6 +30,7 @@ import com.android.lir.databinding.FragmentThematicChatCreateBinding
 import com.android.lir.dataclases.ThematicChat
 import com.android.lir.dataclases.ThematicChatInfo
 import com.android.lir.utils.AndroidUtils
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.chat_view.*
 import kotlinx.coroutines.Dispatchers
@@ -83,11 +84,12 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
         var coordinates = requireArguments().getString("coordinates")
         if (coordinates.isNullOrBlank()) coordinates = info?.coordinates ?: ""
 
-        isEditing =
-            info?.creatorId?.toString() == AppGlobal.shared.dataManager.userId && !isCreating
+        isEditing = info?.creatorId == AppGlobal.shared.dataManager.userId && !isCreating
 
         binding.address.setText(viewModel.loadAddress(requireContext(), coordinates))
 
+        binding.usersCount.isVisible = !isCommercial
+        binding.usersCountTitle.isVisible = !isCommercial
         binding.restrictComments.isVisible = isCommercial
 
         binding.toolbar.setNavigationOnClickListener { dismiss() }
@@ -127,33 +129,14 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
             }
         }
 
-        binding.create.setOnClickListener {
-            val title = binding.title.text.toString().trim()
-            val description = binding.description.text.toString().trim()
-            val phone = binding.phone.text.toString().trim()
-            val address = binding.address.text.toString().trim()
-            val usersCountString = binding.usersCount.text.toString().trim()
-
-            if (title.isEmpty() || description.isEmpty() || phone.isEmpty() || address.isEmpty() || imageIndex == -1 || usersCountString.isEmpty())
-                return@setOnClickListener
-
-            viewModel.createThematicChat(
-                title,
-                description,
-                phone,
-                address,
-                imageIndex,
-                coordinates,
-                usersCountString.toIntOrNull() ?: -1
-            )
-        }
+        binding.create.setOnClickListener { createThematicChat(imageIndex, coordinates) }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.tasksEvent.onEach {
                 when (it) {
                     is ErrorAddPhotoToChat -> deleteLastPicture(it.error)
                     is SuccessAddPhotoToChat -> showSuccessUploadToast()
-                    is ChatCreatedEvent -> loadPictures(it.chatId)
+                    is ChatCreatedEvent -> loadPictures(it.info)
                 }
             }.collect()
         }
@@ -161,6 +144,7 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
         binding.addPhoto.setOnClickListener { pickImage() }
 
         setAccess()
+
 
         if (isEditing) {
             val newItems = arrayListOf<Pair<Drawable?, String?>>()
@@ -170,13 +154,98 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
         }
     }
 
-    private suspend fun loadPictures(chatId: Int) {
+    private fun createThematicChat(imageIndex: Int, coordinates: String) {
+        val title = binding.title.text.toString().trim()
+        val description = binding.description.text.toString().trim()
+        val phone = binding.phone.text.toString().trim()
+        val address = binding.address.text.toString().trim()
+        val usersCountString = binding.usersCount.text.toString().trim()
+
+        if (!checkRequiredFields(
+                imageIndex,
+                title,
+                description,
+                phone,
+                address,
+                usersCountString
+            )
+        ) {
+            Snackbar.make(
+                requireView(),
+                "Заполните обязательные поля" + if (imageIndex > -1) "" else " и выберите аватарку чата",
+                5000
+            ).show()
+            return
+        }
+
+        viewModel.createThematicChat(
+            title,
+            description,
+            phone,
+            address,
+            imageIndex,
+            coordinates,
+            usersCountString.toIntOrNull() ?: -1
+        )
+    }
+
+    private fun checkRequiredFields(
+        imageIndex: Int,
+        title: String,
+        description: String,
+        phone: String,
+        address: String,
+        usersCountString: String
+    ): Boolean {
+        val errorString = "Обязательное поле"
+        var isOK = true
+
+        if (imageIndex == -1) {
+            isOK = false
+        }
+
+        if (title.isEmpty()) {
+            isOK = false
+            binding.title.error = errorString
+        }
+
+        if (description.isEmpty()) {
+            isOK = false
+            binding.description.error = errorString
+        }
+
+        if (phone.isEmpty()) {
+            isOK = false
+            binding.phone.error = errorString
+        }
+
+        if (address.isEmpty()) {
+            isOK = false
+            binding.address.error = errorString
+        }
+
+        if (!isCommercial && usersCountString.isEmpty()) {
+            isOK = false
+            binding.usersCount.error = errorString
+        }
+
+        return isOK
+    }
+
+    private suspend fun loadPictures(info: ThematicChatInfo) {
         val values = adapter.values.value ?: listOf()
 
         remainPictures = values.count()
 
         if (remainPictures == 0) {
             dismiss()
+            findNavController().navigate(
+                R.id.toThematicChatCommentsDialog,
+                bundleOf(
+                    "info" to info,
+                    "coordinates" to info.coordinates
+                )
+            )
             return
         }
 
@@ -186,7 +255,7 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
             values.forEach {
                 it.first?.let { drawable ->
                     val bitmap = AndroidUtils.compressDrawable(drawable)
-                    viewModel.uploadImage(chatId, bitmap)
+                    viewModel.uploadImage(info.chatId, bitmap)
                 }
             }
         }
@@ -266,6 +335,7 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
+        findNavController().navigateUp()
         setFragmentResult("update", bundleOf())
     }
 

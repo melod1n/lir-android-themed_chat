@@ -19,7 +19,7 @@ open class BaseVM : ViewModel() {
         onStart: (suspend () -> Unit)? = null,
         onEnd: (suspend () -> Unit)? = null,
         onError: (suspend (String) -> Unit)? = null
-    ): Job = viewModelScope.launch {
+    ) = viewModelScope.launch {
         onStart?.invoke()
         when (val response = job()) {
             is Answer.Success -> onAnswer(response.data)

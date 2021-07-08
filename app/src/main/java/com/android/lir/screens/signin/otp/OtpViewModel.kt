@@ -18,12 +18,12 @@ class OtpViewModel @Inject constructor(
     private val appScope: CoroutineScope
 ) : BaseVM() {
     fun checkSms(smsCode: String) {
-        makeJob({repo.checkSms(dataManager.sessionId, smsCode)}, onAnswer = {
-            if(!it.error.notFalse()) {
+        makeJob({ repo.checkSms(dataManager.sessionId, smsCode) }, onAnswer = {
+            if (!it.error.notFalse()) {
                 dataManager.token = it.token.value
                 tasksEventChannel.send(GoToAuth)
                 appScope.launch {
-                    repo.sendFireBaseToken(dataManager.userId.toIntOrNull()?: 0, FireBaseService.token ?: "")
+                    repo.sendFireBaseToken(dataManager.userId, FireBaseService.token ?: "")
                 }
             } else {
                 tasksEventChannel.send(ShowInfoDialogEvent(null, "Неверный код"))
@@ -32,4 +32,4 @@ class OtpViewModel @Inject constructor(
     }
 }
 
-object GoToAuth: Event()
+object GoToAuth : Event()

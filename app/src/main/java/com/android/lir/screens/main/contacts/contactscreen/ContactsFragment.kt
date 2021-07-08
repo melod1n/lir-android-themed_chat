@@ -76,19 +76,22 @@ class ContactsFragment : BaseVMFragment<ContactsViewModel>(R.layout.fragment_con
             onAdd = {
                 Toast.makeText(context, "Добавляем в избранное", Toast.LENGTH_SHORT).show()
             },
-            onStartChat = {
-                viewModel.goToChat(it)
-            }
+            onStartChat = { viewModel.goToChat(it) }
         )
         ivClose.setOnClickListener {
             etSearch.text = null
+            viewModel.getUsers(requireContext())
         }
+
         etSearch.doAfterTextChanged {
             message.isVisible = it.isNullOrBlank()
             favorites.isVisible = it.isNullOrBlank()
+
             viewModel.setSearchStr(it?.toString() ?: "")
+
             ivClose.isVisible = !it.isNullOrBlank()
         }
+
         favorites.adapter = favAdapter
         contacts.adapter = adapter
 
@@ -101,6 +104,14 @@ class ContactsFragment : BaseVMFragment<ContactsViewModel>(R.layout.fragment_con
     }
 
     private fun prepareFavoriteActions() {
+        startMessage.setOnClickListener {
+            selectedContact?.let { contact ->
+                viewModel.goToChat(
+                    contact.serverId?.toIntOrNull() ?: contact.id?.toIntOrNull() ?: -1
+                )
+            }
+        }
+
         favorite.setOnClickListener {
             selectedContact?.let { contact ->
                 it.isClickable = false

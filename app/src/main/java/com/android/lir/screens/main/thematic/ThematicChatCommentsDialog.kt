@@ -64,8 +64,12 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
     private lateinit var photosAdapter: ThematicChatPicturesAdapter
     private lateinit var adapter: CommentsAdapter
 
+    private lateinit var placeholder: Drawable
+
     private var pickType: PickType? = null
     private var lastPhoto: Bitmap? = null
+
+    private val memberState = MutableLiveData<MemberState>()
 
     enum class PickType { COMMENT, CHAT }
 
@@ -83,13 +87,15 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        placeholder = ContextCompat.getDrawable(requireContext(), R.drawable.ic_user_placeholder)!!
+
         info = requireArguments().getParcelable("info") as? ThematicChatInfo
 
         var coordinates = requireArguments().getString("coordinates")
         if (coordinates.isNullOrBlank()) coordinates = info?.coordinates ?: ""
 
         binding.toolbar.menu.findItem(R.id.edit).isVisible =
-            info?.creatorId?.toString() == AppGlobal.shared.dataManager.userId
+            info?.creatorId == AppGlobal.shared.dataManager.userId
 
         binding.toolbar.menu.forEach { it.icon?.setTint(Color.DKGRAY) }
 
@@ -124,69 +130,58 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
         binding.rating.rating = rating
         binding.ratingText.text = rating.toString().substring(0, 4)
 
-        val placeCount = info?.usersCount ?: 0
-        var count = placeCount - Random.nextInt(1, 3)
+        info?.let { fillMembers(it.usersCount, it.membersCount) }
 
-        binding.progress.max = placeCount
-        binding.progress.progress = count
-
-        binding.left.text = "%d/%d мест".format(placeCount - count, placeCount)
-
-        val state = MutableLiveData<AcceptState>()
-
-        state.observe({ lifecycleRegistry }) {
-            when (it) {
-                AcceptState.FULL -> {
+        memberState.observe({ lifecycleRegistry }) { s ->
+            when (s) {
+                MemberState.FULL -> {
                     binding.accept.backgroundTintList = ColorStateList.valueOf(0xffEFEFF4.toInt())
                     binding.accept.text = "Нет мест"
+                    binding.accept.isClickable = false
                     binding.accept.setTextColor(0xff8E8E93.toInt())
 
-                    binding.progress.progress = count
-                    binding.left.text = "%d/%d мест".format(placeCount - count, placeCount)
+                    info?.let { fillMembers(it.usersCount, it.membersCount) }
                 }
-                AcceptState.ACCEPT -> {
-                    binding.progress.progress = count
-                    binding.left.text = "%d/%d мест".format(placeCount - count, placeCount)
-
+                MemberState.NOT_IN -> {
                     binding.accept.backgroundTintList = ColorStateList.valueOf(0xff4CD964.toInt())
                     binding.accept.text = "Принять участие"
+
+                    info?.let { fillMembers(it.usersCount, it.membersCount) }
                 }
                 else -> {
-                    binding.progress.progress = count
-                    binding.left.text = "%d/%d мест".format(placeCount - count, placeCount)
-
                     binding.accept.backgroundTintList = ColorStateList.valueOf(0xff4CD964.toInt())
                     binding.accept.text = "Ты участник"
+                    binding.accept.isClickable = false
+
+                    info?.let { fillMembers(it.usersCount, it.membersCount) }
                 }
             }
         }
 
-        if (count == placeCount) {
-            state.value = AcceptState.FULL
-        } else {
-            state.value = AcceptState.ACCEPT
-        }
+        checkMembers()
 
         binding.accept.setOnClickListener {
-            if (state.value == AcceptState.MEMBER ||
-                state.value == AcceptState.FULL
+            if (AppGlobal.shared.dataManager.userId == info?.creatorId) {
+                Snackbar.make(
+                    requireView(),
+                    "Создатель чата не может выполнить это действие",
+                    Snackbar.LENGTH_LONG
+                ).show()
+                return@setOnClickListener
+            }
+
+            if (memberState.value == MemberState.IN ||
+                memberState.value == MemberState.FULL
             ) return@setOnClickListener
 
-            it.isClickable = false
-
             viewModel.acceptChatInvite(info?.chatId ?: -1)
-        }
-
-        binding.authorUserIcon.load(AppGlobal.kittens.random()) {
-            crossfade(100)
-            size(200, 200)
-            error(ColorDrawable(Color.RED))
         }
 
         binding.userIcon.load(AppGlobal.kittens.random()) {
             crossfade(100)
             size(200, 200)
-            error(ColorDrawable(Color.RED))
+            error(placeholder)
+            placeholder(placeholder)
         }
 
         binding.send.setOnClickListener {
@@ -201,7 +196,7 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
                     messageId = -1,
                     chatId = info?.chatId ?: -1,
                     text = message,
-                    userId = AppGlobal.shared.dataManager.userId.toInt(),
+                    userId = AppGlobal.shared.dataManager.userId,
                 )
             )
             adapter.notifyDataSetChanged()
@@ -215,17 +210,17 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.tasksEvent.onEach {
                 when (it) {
-                    is MessageSent -> addMessage(it.id, lastPhoto)
+                    is MessageSent -> addMessage(it.comment, lastPhoto)
                     is MessageError -> removeFirstMessage()
                     is LoadThematicChatEvent -> fillInfo(it.response)
                     is SuccessAddPhotoToChat -> addPhoto()
                     is ErrorAddPhotoToChat -> lastPhoto = null
                     is AddUserToChat -> {
-                        count++
-
-                        if (count == placeCount) state.value = AcceptState.FULL
-                        else state.value = AcceptState.MEMBER
-
+                        info?.let { info ->
+                            info.membersCount++
+                            info.isMember = 1
+                        }
+                        checkMembers()
                     }
                 }
             }.collect()
@@ -272,7 +267,22 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
         loadChat()
     }
 
-    enum class AcceptState { MEMBER, ACCEPT, FULL }
+    private fun checkMembers() {
+        memberState.value = when {
+            info?.membersCount == info?.usersCount -> MemberState.FULL
+            info?.isMember == 1 -> MemberState.IN
+            else -> MemberState.NOT_IN
+        }
+    }
+
+    private fun fillMembers(usersCount: Int, membersCount: Int) {
+        binding.progress.max = usersCount
+        binding.progress.progress = membersCount
+
+        binding.left.text = "%d/%d мест".format(usersCount - membersCount, usersCount)
+    }
+
+    enum class MemberState { IN, NOT_IN, FULL }
 
     private fun addPhoto() {
         lastPhoto?.let {
@@ -287,19 +297,33 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
 
     private fun fillInfo(chat: ThematicChat) {
         this.chat = chat
-        val info = chat.info
+        this.info = chat.info
 
-        binding.title.text = info.title
-        binding.address.text = info.address
-        binding.address.isSelected = true
-        binding.phone.text = info.phone
+        info?.let { info ->
+            binding.title.text = info.title
+            binding.address.text = info.address
+            binding.address.isSelected = true
+            binding.phone.text = info.phone
 
-        val icon = ContextCompat.getDrawable(
-            requireContext(),
-            AppGlobal.thematicChatAvatars[info.avatarNum]
-        )
+            val icon = ContextCompat.getDrawable(
+                requireContext(),
+                AppGlobal.thematicChatAvatars[info.avatarNum]
+            )
 
-        binding.icon.load(icon) { error(ColorDrawable(Color.RED)) }
+            binding.icon.load(icon) { error(ColorDrawable(Color.RED)) }
+
+            binding.creatorPhoto.load(info.creatorPhoto ?: "") {
+                crossfade(100)
+                size(200, 200)
+                error(placeholder)
+                placeholder(placeholder)
+            }
+
+            binding.creatorName.text = info.creatorName
+
+            fillMembers(info.usersCount, info.membersCount)
+            checkMembers()
+        }
 
         val newItems = arrayListOf<Pair<Drawable?, String?>>()
         chat.images.forEach { newItems.add(null to it) }
@@ -321,17 +345,14 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
         adapter.notifyDataSetChanged()
     }
 
-    private fun addMessage(id: Int, image: Bitmap? = null) {
+    private fun addMessage(comment: ThematicComment, image: Bitmap? = null) {
         if (image != null) {
             pickType = null
             image.let { viewModel.uploadCommentImage(id, it) }
             return
         }
 
-        val values = adapter.values.value ?: arrayListOf()
-
-        val value = values.first().also { it.messageId = id }
-        adapter[0] = value
+        adapter[0] = comment
         adapter.notifyDataSetChanged()
     }
 
@@ -383,6 +404,8 @@ class CommentsAdapter(
 
     inner class Holder(binding: ItemCommentBinding) : BindingHolder<ItemCommentBinding>(binding) {
 
+        private val placeholder = ContextCompat.getDrawable(context, R.drawable.ic_user_placeholder)
+
         override fun bind(position: Int) {
             val item = getItem(position)
 
@@ -421,7 +444,8 @@ class CommentsAdapter(
             binding.avatar.load(photo) {
                 crossfade(100)
                 size(200, 200)
-                error(ColorDrawable(Color.RED))
+                error(placeholder)
+                placeholder(placeholder)
             }
         }
 

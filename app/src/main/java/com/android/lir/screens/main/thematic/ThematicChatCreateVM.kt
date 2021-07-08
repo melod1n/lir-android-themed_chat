@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.lir.base.vm.BaseVM
 import com.android.lir.base.vm.Event
 import com.android.lir.common.AppGlobal
+import com.android.lir.dataclases.ThematicChatInfo
 import com.android.lir.network.AuthRepo
 import com.android.lir.utils.AndroidUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,7 +42,7 @@ class ThemedChatCreateVM @Inject constructor(
             )
         },
             onAnswer = {
-                tasksEventChannel.send(ChatCreatedEvent(it.chatId))
+                tasksEventChannel.send(ChatCreatedEvent(it.info))
             })
     }
 
@@ -75,4 +76,4 @@ class ThemedChatCreateVM @Inject constructor(
 
 object SuccessAddPhotoToChat : Event()
 data class ErrorAddPhotoToChat(val error: String) : Event()
-data class ChatCreatedEvent(val chatId: Int) : Event()
+data class ChatCreatedEvent(val info: ThematicChatInfo) : Event()

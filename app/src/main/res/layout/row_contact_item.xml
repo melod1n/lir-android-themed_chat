@@ -16,16 +16,15 @@
         android:textSize="28sp"
         tools:text="А" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_marginVertical="4dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="10dp"
-        android:contentDescription="@null"
-        android:padding="10dp"
         android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/CircleImageView_56"
         tools:background="@drawable/circle"
         tools:backgroundTint="@color/small_pink_alpha"
         tools:src="@drawable/ic_base_person"

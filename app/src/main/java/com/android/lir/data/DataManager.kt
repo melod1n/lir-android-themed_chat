@@ -10,7 +10,7 @@ class DataManager @Inject constructor() {
         phoneNumber = ""
         token = ""
         sessionId = ""
-        userId = ""
+        userId = -1
     }
 
     var phoneNumber: String = ""
@@ -28,9 +28,9 @@ class DataManager @Inject constructor() {
             field = value
             if (value.isNotEmpty()) AppGlobal.shared.saveDataManager()
         }
-    var userId: String = ""
+    var userId: Int = -1
         set(value) {
             field = value
-            if (value.isNotEmpty()) AppGlobal.shared.saveDataManager()
+            AppGlobal.shared.saveDataManager()
         }
 }

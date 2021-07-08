@@ -4,20 +4,18 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SectionIndexer
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.android.lir.R
 import com.android.lir.dataclases.Contact
-import com.bumptech.glide.Glide
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.android.synthetic.main.row_contact_item.view.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 
 @ActivityRetainedScoped
@@ -62,10 +60,11 @@ class ContactsAdapter @Inject constructor(
         }
     }
 
-    inner class ViewHolder(private val colorScheme: Pair<Int, Int>, val view: View) :
-        RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(private val colorScheme: Pair<Int, Int>, val view: View) :RecyclerView.ViewHolder(view) {
 
         private lateinit var user: Contact
+
+        private val placeholder = ContextCompat.getDrawable(context, R.drawable.ic_user_placeholder)
 
         init {
             view.setOnClickListener {
@@ -80,7 +79,18 @@ class ContactsAdapter @Inject constructor(
 
         fun bind(item: Contact, isNotFirst: Boolean) {
             user = item
-            if (item.serverPhoto != null) {
+
+            if (item.serverPhone == null) {
+                view.imageView.setImageDrawable(placeholder)
+            } else {
+                view.imageView.load(item.serverPhoto) {
+                    crossfade(100)
+                    placeholder(placeholder)
+                    error(placeholder)
+                }
+            }
+
+            /*if (item.serverPhoto != null) {
                 Glide.with(view.context).load(item.serverPhoto).circleCrop().into(view.imageView)
             } else {
                 with(view.imageView) {
@@ -90,7 +100,7 @@ class ContactsAdapter @Inject constructor(
                     setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_base_person))
                     setColorFilter(context.getColor(colorScheme.first))
                 }
-            }
+            }*/
             view.letter.text = if (!isNotFirst) item.name?.first()?.toString() else ""
             view.connect.isVisible = !item.isRegister
 //            view.call.isVisible = item.isRegister
@@ -101,7 +111,7 @@ class ContactsAdapter @Inject constructor(
                     view.connect.text = "✓ Отправлено"
                     view.connect.setTextColor(ContextCompat.getColor(context, R.color.phiolet))
                 } else {
-                    view.connect.setBackgroundColor(ContextCompat.getColor(context, R.color.yellow))
+                    view.connect.setBackgroundColor(ContextCompat.getColor(context, R.color.phiolet))
                     view.connect.text = "+ Пригласить"
                     view.connect.setTextColor(ContextCompat.getColor(context, R.color.white))
                 }

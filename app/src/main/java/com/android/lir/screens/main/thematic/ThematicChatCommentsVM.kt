@@ -6,6 +6,7 @@ import com.android.lir.base.vm.BaseVM
 import com.android.lir.base.vm.Event
 import com.android.lir.common.AppGlobal
 import com.android.lir.dataclases.ThematicChat
+import com.android.lir.dataclases.ThematicComment
 import com.android.lir.network.AuthRepo
 import com.android.lir.utils.AndroidUtils
 import com.android.lir.utils.AppExtensions.compressBitmap
@@ -21,7 +22,7 @@ class ThematicChatCommentsVM @Inject constructor(
     fun sendMessage(chatId: Int, message: String) = viewModelScope.launch {
         makeJob({ repo.addThematicMessage(chatId, message, AppGlobal.shared.dataManager.token) },
             onAnswer = {
-                tasksEventChannel.send(MessageSent(it.messageId))
+                tasksEventChannel.send(MessageSent(it.info))
             },
             onError = {
                 tasksEventChannel.send(MessageError(it))
@@ -93,6 +94,6 @@ class ThematicChatCommentsVM @Inject constructor(
 }
 
 object AddUserToChat : Event()
-data class MessageSent(val id: Int) : Event()
+data class MessageSent(val comment: ThematicComment) : Event()
 data class MessageError(val error: String) : Event()
 data class LoadThematicChatEvent(val response: ThematicChat) : Event()

@@ -36,7 +36,7 @@ class ChatViewModel @Inject constructor(
 
     fun getChats() = viewModelScope.launch {
         makeJob(
-            { repo.getPrivateAllChats(dataManager.userId.toIntOrNull() ?: -1, dataManager.token) },
+            { repo.getPrivateAllChats(dataManager.userId, dataManager.token) },
             onAnswer = {
                 if (!it.error.notFalse()) allChats.postValue(it.chats)
             },

@@ -61,7 +61,7 @@ class ChatDetailVM @Inject constructor(
 
     private fun getChat() {
         makeJob(
-            { repo.createChat(dataManager.userId.toIntOrNull() ?: 1, partnerId ?: 0) },
+            { repo.createChat(dataManager.userId, partnerId ?: 0) },
             onAnswer = {
                 if (it.chatId.notFalse()) {
                     tasksEventChannel.send(PutPartnerInfoEvent(it.photo ?: "", it.name ?: "Неизвестный"))

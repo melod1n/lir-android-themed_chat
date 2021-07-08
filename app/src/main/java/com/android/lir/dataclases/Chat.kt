@@ -102,7 +102,7 @@ data class PutPrivateResponse(
 data class CheckUserResponse(
     @SerializedName("auth_sms_code") var smsCode: AlwaysString,
     @SerializedName("auth_session") var session: AlwaysString,
-    @SerializedName("user_id") var userId: AlwaysString,
+    @SerializedName("user_id") var userId: Int,
     @SerializedName("error") var error: AlwaysString
 ) : Parcelable
 
@@ -119,10 +119,10 @@ data class PrivateMessage(
     @SerializedName("id") val id: Int,
     @SerializedName("text") val text: String,
     @SerializedName("photo") val photo: String?,
-    @SerializedName("user_id") var userId: String,
+    @SerializedName("user_id") var userId: Int,
     @SerializedName("created_at") var createdAt: String,
 ) : Parcelable {
-    fun toModel(myId: String): PrivateChatItem {
+    fun toModel(myId: Int): PrivateChatItem {
         return if (myId == userId) {
             PrivateChatItem.Send(this)
         } else PrivateChatItem.Receiver(this)
@@ -149,7 +149,7 @@ data class AlwaysString(val value: String) : Parcelable {
 data class Message(
     @SerializedName("chat_id") var chat_id: Int?,
     @SerializedName("text") var text: String?,
-    @SerializedName("user_id") var user_id: String?,
+    @SerializedName("user_id") var user_id: Int?,
     @SerializedName("uid") var uid: String?
 ) : Parcelable
 
@@ -201,13 +201,14 @@ data class FavoriteUsersResponse(
 @Parcelize
 data class CreateThematicChatResponse(
     @SerializedName("error") var error: AlwaysString,
-    @SerializedName("thematicchat_id") var chatId: Int
+    @SerializedName("thematicchat_id") var chatId: Int,
+    @SerializedName("info") var info: ThematicChatInfo
 ) : Parcelable
 
 @Parcelize
 data class AddThematicMessageResponse(
     @SerializedName("error") var error: AlwaysString,
-    @SerializedName("thematicchatmessage_id") var messageId: Int
+    @SerializedName("info") var info: ThematicComment
 ) : Parcelable
 
 @Parcelize
@@ -218,6 +219,7 @@ data class GetThematicChatResponse(
 
 @Parcelize
 data class GetThematicChatsResponse(
+    @SerializedName("error") var error: AlwaysString,
     @SerializedName("thematicchats") var chats: List<ThematicChatInfo>
 ) : Parcelable
 
@@ -238,7 +240,11 @@ data class ThematicChatInfo(
     @SerializedName("phone") var phone: String = "",
     @SerializedName("coordinates") var coordinates: String?,
     @SerializedName("avatar_num") var avatarNum: Int,
-    @SerializedName("user_count") var usersCount: Int
+    @SerializedName("user_count") var usersCount: Int,
+    @SerializedName("members_count") var membersCount: Int,
+    @SerializedName("chat_author_name") var creatorName: String?,
+    @SerializedName("chat_author_photo") var creatorPhoto: String?,
+    @SerializedName("isMember") var isMember: Int? = 0
 ) : Parcelable
 
 @Parcelize

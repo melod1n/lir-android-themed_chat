@@ -46,6 +46,8 @@ class ThematicChatPickChatAvatarDialog :
             )
         }
 
+        binding.toolbar.setNavigationOnClickListener { dismiss() }
+
         adapter = PickAvatarAdapter(requireContext(), items)
 
         binding.recyclerView.adapter = adapter.also { _ ->
