@@ -29,15 +29,5 @@
         <item name="cornerSize">28dp</item>
     </style>
 
-    <style name="CircleImageView_92">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">46dp</item>
-    </style>
-
-    <style name="CircleImageView_120">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">60dp</item>
-    </style>
-
 
 </resources>
