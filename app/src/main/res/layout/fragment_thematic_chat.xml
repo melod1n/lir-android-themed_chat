@@ -42,7 +42,7 @@
                         android:layout_height="90dp"
                         android:layout_gravity="center"
                         android:padding="16dp"
-                        android:src="@drawable/thematic_chat_donut" />
+                        tools:src="@drawable/thematic_chat_donut" />
 
                 </FrameLayout>
 
@@ -356,7 +356,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
-                        android:text="Люблю собак. Кинолог" />
+                        android:text="Здесь будет описание из профиля" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

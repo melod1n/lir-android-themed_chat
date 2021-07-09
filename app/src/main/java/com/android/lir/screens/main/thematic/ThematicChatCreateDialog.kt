@@ -78,6 +78,8 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
         isCommercial = requireArguments().getBoolean("isCommercial", false)
         isCreating = requireArguments().getBoolean("isCreate", true)
 
+        if (isCommercial) binding.toolbar.title = "БИЗНЕС"
+
         chat = requireArguments().getParcelable("chat") as? ThematicChat
         info = requireArguments().getParcelable("info") as? ThematicChatInfo
 
@@ -151,6 +153,8 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
             chat?.images?.forEach { newItems.add(null to it) }
             adapter.updateValues(newItems)
             adapter.notifyDataSetChanged()
+
+
         }
     }
 
@@ -315,6 +319,9 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
                 binding.description.setText(it.description)
                 binding.phone.setText(it.phone)
                 binding.address.setText(it.address)
+                binding.usersCount.setText(it.usersCount.toString())
+
+                binding.picture.setImageResource(AppGlobal.thematicChatAvatars[it.imageIndex])
             }
 
         }

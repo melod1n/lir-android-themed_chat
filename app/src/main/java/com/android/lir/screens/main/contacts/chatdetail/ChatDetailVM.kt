@@ -64,7 +64,12 @@ class ChatDetailVM @Inject constructor(
             { repo.createChat(dataManager.userId, partnerId ?: 0) },
             onAnswer = {
                 if (it.chatId.notFalse()) {
-                    tasksEventChannel.send(PutPartnerInfoEvent(it.photo ?: "", it.name ?: "Неизвестный"))
+                    tasksEventChannel.send(
+                        PutPartnerInfoEvent(
+                            it.photo ?: "",
+                            it.name ?: "Неизвестный"
+                        )
+                    )
                     chatId = it.chatId.value.toIntOrNull() ?: 0
                     _messages.postValue(it.messages.map { message -> message.toModel(dataManager.userId) })
                 }
@@ -73,15 +78,20 @@ class ChatDetailVM @Inject constructor(
     }
 
     fun sendMessage(bitmap: Bitmap? = null) {
+        if (chatId == null || (currentMessage.value.isNullOrEmpty() && bitmap == null)) return
         makeJob(
             {
-                if (chatId == null || (currentMessage.value.isNullOrEmpty() && bitmap == null)) return@makeJob Answer.Error("Что-то пошло не так...")
-                val isTokenCorrect = (repo.checkToken(dataManager.token) as? Answer.Success)?.data?.success?.value?.equals("true") ?: false
+                val isTokenCorrect =
+                    (repo.checkToken(dataManager.token) as? Answer.Success)?.data?.success?.value?.equals(
+                        "true"
+                    ) ?: false
                 if (!isTokenCorrect) return@makeJob Answer.Error("")
                 val message = currentMessage.value
                 tasksEventChannel.send(ClearEvent)
-                repo.addPrivateMessage(chatId!!, message.orEmpty(),
-                    bitmap?.compressBitmap()?.toBase64(), dataManager.token)
+                repo.addPrivateMessage(
+                    chatId!!, message.orEmpty(),
+                    bitmap?.compressBitmap()?.toBase64(), dataManager.token
+                )
             },
             onAnswer = {
                 if (!it.error.notFalse()) {
@@ -97,6 +107,7 @@ class ChatDetailVM @Inject constructor(
         )
     }
 }
+
 enum class EnabledType { ENABLE, CHAT_DISABLE, NO_AUTH_DISABLE }
 
 object LogOutEvent : Event()

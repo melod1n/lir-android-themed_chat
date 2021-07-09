@@ -70,7 +70,7 @@ class ThematicChatPickChatAvatarDialog :
             }
 
             adapter.updateValues(values)
-            adapter.notifyItemRangeChanged(0, adapter.itemCount)
+            adapter.notifyDataSetChanged()
         }
     }
 
@@ -96,10 +96,7 @@ class PickAvatarAdapter(
         override fun bind(position: Int) {
             val item = getItem(position)
 
-            binding.icon.load(item.icon) {
-                size(200, 200)
-                crossfade(100)
-            }
+            binding.icon.setImageDrawable(item.icon)
 
             binding.selected.imageTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(

@@ -26,7 +26,7 @@ class ContactsViewModel @Inject constructor(
     private val repo: AuthRepo,
 ) : BaseVM() {
 
-    private val ourUsers: MutableLiveData<List<Contact>> = MutableLiveData()
+     val ourUsers: MutableLiveData<List<Contact>> = MutableLiveData()
 
     private val query = MutableLiveData("")
     val users = query.switchMap { q ->

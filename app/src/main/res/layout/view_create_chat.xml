@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:background="@drawable/bg_rounded_top"
-    android:orientation="horizontal"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/llCreateEasyChat"
@@ -19,7 +19,7 @@
         <ImageView
             android:layout_width="38dp"
             android:layout_height="38dp"
-            android:src="@drawable/ic_easy" />
+            android:src="@drawable/ic_simple_chat" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
         <ImageView
             android:layout_width="38dp"
             android:layout_height="38dp"
-            android:src="@drawable/ic_themmed" />
+            android:src="@drawable/ic_thematic_chat" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -97,7 +97,7 @@
         <ImageView
             android:layout_width="38dp"
             android:layout_height="38dp"
-            android:src="@drawable/ic_commercial" />
+            android:src="@drawable/ic_commercial_chat" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -3,11 +3,12 @@ package com.android.lir.screens.main.map
 import android.content.ContentValues
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Bitmap
+import android.graphics.*
 import android.location.Location
 import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.viewModelScope
 import com.android.lir.R
 import com.android.lir.base.vm.BaseVM
@@ -32,6 +33,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
+
 @HiltViewModel
 class MapsVM @Inject constructor(
     @ApplicationContext context: Context,
@@ -48,14 +50,16 @@ class MapsVM @Inject constructor(
                 GoogleMap.OnMarkerClickListener {
                     val tag = it.tag?.toString() ?: return@OnMarkerClickListener false
 
-                    tag.toThematicChat()?.let {
-                        viewModelScope.launch { tasksEventChannel.send(ShowThematicDialog(it)) }
-                        return@OnMarkerClickListener true
-                    }
-
-                    tag.toChat()?.let {
-                        viewModelScope.launch { tasksEventChannel.send(ShowEasyDialog(it)) }
-                        return@OnMarkerClickListener true
+                    if (tag.contains("thematic")) {
+                        tag.toThematicChat()?.let {
+                            viewModelScope.launch { tasksEventChannel.send(ShowThematicDialog(it)) }
+                            return@OnMarkerClickListener true
+                        }
+                    } else {
+                        tag.toChat()?.let {
+                            viewModelScope.launch { tasksEventChannel.send(ShowEasyDialog(it)) }
+                            return@OnMarkerClickListener true
+                        }
                     }
 
                     return@OnMarkerClickListener false
@@ -100,7 +104,9 @@ class MapsVM @Inject constructor(
                             thematicChat.coordinates?.substringAfter("_")?.toDoubleOrNull() ?: 0.0
 
                         val icon = generateIcon(R.drawable.ic_chat_themed) ?: return@forEach
-                        val tag = Gson().toJson(thematicChat)
+                        var tag = Gson().toJson(thematicChat)
+                        tag = tag.substring(0, tag.length - 1) + ", \"type\":\"thematic\"}"
+
                         putMarkerOnMap(LatLng(lat, lng), icon, tag)
                     }
             })
@@ -111,18 +117,10 @@ class MapsVM @Inject constructor(
         width: Int = 120,
         height: Int = 120,
         count: Int? = null
-    ): BitmapDescriptor? =
-        ResourcesCompat.getDrawable(resources, res, null)
-            ?.toBitmapWithBadge(width, height, count ?: 0)?.let {
-                BitmapDescriptorFactory.fromBitmap(
-                    Bitmap.createScaledBitmap(
-                        it,
-                        width,
-                        height,
-                        false
-                    )
-                )
-            }
+    ) = ResourcesCompat.getDrawable(resources, res, null)
+        ?.toBitmapWithBadge(width, height, count ?: 0)?.let {
+            BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(it, width, height, true))
+        }
 
     fun locationReceived(task: Task<Location>) {
         if (task.isSuccessful) {
@@ -164,6 +162,7 @@ class MapsVM @Inject constructor(
         val lat = coordinates.substringBefore("_").toDoubleOrNull() ?: 0.0
         val lng = coordinates.substringAfter("_").toDoubleOrNull() ?: 0.0
         val icon = generateIcon(R.drawable.ic_chat_easy) ?: return
+
         putMarkerOnMap(LatLng(lat, lng), icon, "chat")
     }
 
@@ -171,6 +170,7 @@ class MapsVM @Inject constructor(
         val lat = coordinates.substringBefore("_").toDoubleOrNull() ?: 0.0
         val lng = coordinates.substringAfter("_").toDoubleOrNull() ?: 0.0
         val icon = generateIcon(R.drawable.ic_chat_themed) ?: return
+
         putMarkerOnMap(LatLng(lat, lng), icon, "chat_thematic")
     }
 
@@ -178,9 +178,51 @@ class MapsVM @Inject constructor(
         val lat = coordinates.substringBefore("_").toDoubleOrNull() ?: 0.0
         val lng = coordinates.substringAfter("_").toDoubleOrNull() ?: 0.0
 //        val icon = generateIcon(R.drawable.ic_baseline_location_on_24) ?: return
-        val icon = generateIcon(R.drawable.ic_point_purple) ?: return
 
-        putMarkerOnMap(LatLng(lat, lng), icon, anotherTag ?: "simple_point")
+        val markerBitmap =
+            ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_location_on_24, null)
+                ?.toBitmap() ?: return
+//        val resultBitmap = Bitmap.createBitmap(markerBitmap, 0, 0, markerBitmap.width - 1, markerBitmap.height - 1)
+//        val filter = PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN)
+
+        val markerPaint = Paint()
+//        markerPaint.colorFilter = filter
+
+        val resultBitmap = addGradient(markerBitmap)
+
+        val canvas = Canvas(resultBitmap)
+        canvas.drawBitmap(resultBitmap, 0f, 0f, markerPaint)
+
+        putMarkerOnMap(
+            LatLng(lat, lng),
+            BitmapDescriptorFactory.fromBitmap(resultBitmap),
+            anotherTag ?: "simple_point"
+        )
+    }
+
+    fun addGradient(originalBitmap: Bitmap): Bitmap {
+        val width = originalBitmap.width
+        val height = originalBitmap.height
+        val updatedBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(updatedBitmap)
+        canvas.drawBitmap(originalBitmap, 0F, 0F, null)
+
+        val paint = Paint()
+        val shader =
+            LinearGradient(
+                0F,
+                0F,
+                0F,
+                height.toFloat(),
+                0xffc86dd7.toInt(),
+                0xff3023ae.toInt(),
+                Shader.TileMode.CLAMP
+            )
+        paint.shader = shader
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
+        canvas.drawRect(0F, 0F, width.toFloat(), height.toFloat(), paint)
+
+        return updatedBitmap
     }
 }
 

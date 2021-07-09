@@ -307,10 +307,10 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
 
             val icon = ContextCompat.getDrawable(
                 requireContext(),
-                AppGlobal.thematicChatAvatars[info.avatarNum]
+                AppGlobal.thematicChatAvatars[info.imageIndex]
             )
 
-            binding.icon.load(icon) { error(ColorDrawable(Color.RED)) }
+            binding.icon.setImageDrawable(icon)
 
             binding.creatorPhoto.load(info.creatorPhoto ?: "") {
                 crossfade(100)

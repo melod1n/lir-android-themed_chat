@@ -80,6 +80,8 @@ class ContactsFragment : BaseVMFragment<ContactsViewModel>(R.layout.fragment_con
         )
         ivClose.setOnClickListener {
             etSearch.text = null
+            hideKeyboard()
+            viewModel.ourUsers.value = listOf()
             viewModel.getUsers(requireContext())
         }
 
@@ -98,6 +100,7 @@ class ContactsFragment : BaseVMFragment<ContactsViewModel>(R.layout.fragment_con
         viewModel.users.observe(viewLifecycleOwner) {
             it?.let {
                 adapter.submitList(it)
+                contacts.scrollTo(0, 0)
             }
         }
         viewModel.users.value ?: requestContactPermission()

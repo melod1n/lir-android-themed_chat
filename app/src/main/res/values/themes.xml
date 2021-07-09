@@ -10,8 +10,8 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Customize your theme here. -->
-
-        <item name="colorControlNormal">?colorPrimary</item>
+        <item name="colorControlActivated">@color/point_color</item>
+        <item name="colorControlHighlight">@color/point_color</item>
     </style>
 
 
@@ -20,11 +20,17 @@
         <item name="android:statusBarColor">@color/black</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="iconTint">@color/white</item>
+
+        <item name="colorControlActivated">@color/point_color</item>
+        <item name="colorControlHighlight">@color/point_color</item>
     </style>
 
     <style name="AppFullScreenDialog" parent="Theme.MaterialComponents.Light.Dialog">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowBackground">@android:color/white</item>
+
+        <item name="colorControlActivated">@color/point_color</item>
+        <item name="colorControlHighlight">@color/point_color</item>
     </style>
 
 </resources>

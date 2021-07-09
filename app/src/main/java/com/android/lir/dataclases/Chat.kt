@@ -39,6 +39,7 @@ data class Chat(
     @SerializedName("channel_flag") var flag: Int?,
     @SerializedName("messages_count") var count: Int?,
     @SerializedName("created_at") var created_at: String?,
+    val tag: String = "simple_chat"
 ) : Parcelable
 
 @Parcelize
@@ -239,12 +240,13 @@ data class ThematicChatInfo(
     @SerializedName("address") var address: String,
     @SerializedName("phone") var phone: String = "",
     @SerializedName("coordinates") var coordinates: String?,
-    @SerializedName("avatar_num") var avatarNum: Int,
+    @SerializedName("avatar_num") var imageIndex: Int,
     @SerializedName("user_count") var usersCount: Int,
     @SerializedName("members_count") var membersCount: Int,
     @SerializedName("chat_author_name") var creatorName: String?,
     @SerializedName("chat_author_photo") var creatorPhoto: String?,
-    @SerializedName("isMember") var isMember: Int? = 0
+    @SerializedName("isMember") var isMember: Int? = 0,
+    val tag: String = "simple_chat"
 ) : Parcelable
 
 @Parcelize

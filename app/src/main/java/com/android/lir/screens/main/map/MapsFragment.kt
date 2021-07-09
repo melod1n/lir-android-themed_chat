@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
@@ -133,15 +132,8 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
         val addresses = searchAddresses()
         if (addresses.isEmpty()) {
             Snackbar.make(requireView(), "Ничего не найдено", Snackbar.LENGTH_LONG).show()
-                //            Toast.makeText(requireContext(), "Ничего не найдено", Toast.LENGTH_LONG).show()
             return
         }
-
-//        Toast.makeText(
-//            requireContext(),
-//            "Найдено результатов: ${addresses.count()}",
-//            Toast.LENGTH_LONG
-//        ).show()
 
         val address = addresses[0]
         val lat = address.latitude
@@ -149,20 +141,10 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
 
         viewModel.addPointImage("${lat}_${lon}", "search")
         viewModel.moveCamera(LatLng(lat, lon))
-
-//        val strAddresses = arrayListOf<String>()
-//        addresses.forEach {
-//
-//            strAddresses.add(it.getAddressLine(0))
-//        }
-
-//        val address = addresses[0].getAddressLine(0)
-//        Log.d("SEARCH", "search: ${strAddresses.stream().collect(Collectors.joining(", "))}")
     }
 
     private fun searchAddresses(): List<Address> {
         val geocoder = Geocoder(context, Locale.getDefault())
-
         return geocoder.getFromLocationName(etSearch.text.toString().trim(), 100)
     }
 
@@ -187,6 +169,7 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
                     .setPositiveButton("Ок") { _, _ -> e.askAgain() }
                     .show()
             }
+
             if (e.hasForeverDenied()) {
                 e.goToSettings()
             }
@@ -197,12 +180,8 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
     override fun onEvent(event: Event) {
         super.onEvent(event)
         when (event) {
-            is ShowEasyDialog -> {
-                showEasyChat(event.chat)
-            }
-            is ShowThematicDialog -> {
-                showThemedChat(event.thematicChat)
-            }
+            is ShowEasyDialog -> showEasyChat(event.chat)
+            is ShowThematicDialog -> showThemedChat(event.thematicChat)
         }
     }
 
@@ -249,7 +228,6 @@ class MapsFragment : BaseVMFragment<MapsVM>(R.layout.fragment_maps), OnMapReadyC
             )
         )
     }
-
 
     private fun showEasyChat(
         chat: Chat? = null,
