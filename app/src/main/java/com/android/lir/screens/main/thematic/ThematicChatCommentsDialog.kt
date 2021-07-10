@@ -1,7 +1,6 @@
 package com.android.lir.screens.main.thematic
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
@@ -16,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.viewbinding.library.fragment.viewBinding
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.drawable.toDrawable
@@ -87,6 +87,16 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (AppGlobal.shared.dataManager.token.isBlank()) {
+            AlertDialog.Builder(requireContext())
+                .setMessage("Для того, чтобы создать чат, вам необходимо атворизоваться")
+                .setPositiveButton("Ок", null)
+                .show()
+
+            dismiss()
+            return
+        }
+
         placeholder = ContextCompat.getDrawable(requireContext(), R.drawable.ic_user_placeholder)!!
 
         info = requireArguments().getParcelable("info") as? ThematicChatInfo
@@ -94,8 +104,10 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
         var coordinates = requireArguments().getString("coordinates")
         if (coordinates.isNullOrBlank()) coordinates = info?.coordinates ?: ""
 
-        binding.toolbar.menu.findItem(R.id.edit).isVisible =
-            info?.creatorId == AppGlobal.shared.dataManager.userId
+        binding.toolbar.menu.findItem(R.id.edit).isVisible = false
+//            info?.creatorId == AppGlobal.shared.dataManager.userId
+
+        if (AppGlobal.shared.dataManager.token.isBlank()) binding.messageBoxCard.isVisible = false
 
         binding.toolbar.menu.forEach { it.icon?.setTint(Color.DKGRAY) }
 
@@ -177,9 +189,8 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
             viewModel.acceptChatInvite(info?.chatId ?: -1)
         }
 
-        binding.userIcon.load(AppGlobal.kittens.random()) {
+        binding.userIcon.load(AppGlobal.shared.dataManager.user?.photo) {
             crossfade(100)
-            size(200, 200)
             error(placeholder)
             placeholder(placeholder)
         }
@@ -213,7 +224,7 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
                     is MessageSent -> addMessage(it.comment, lastPhoto)
                     is MessageError -> removeFirstMessage()
                     is LoadThematicChatEvent -> fillInfo(it.response)
-                    is SuccessAddPhotoToChat -> addPhoto()
+                    is SuccessAddPhotoToChat -> addPhotoToChat()
                     is ErrorAddPhotoToChat -> lastPhoto = null
                     is AddUserToChat -> {
                         info?.let { info ->
@@ -284,7 +295,7 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
 
     enum class MemberState { IN, NOT_IN, FULL }
 
-    private fun addPhoto() {
+    private fun addPhotoToChat() {
         lastPhoto?.let {
             photosAdapter.add(it.toDrawable(resources) as Drawable to null)
             photosAdapter.notifyDataSetChanged()
@@ -304,6 +315,8 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
             binding.address.text = info.address
             binding.address.isSelected = true
             binding.phone.text = info.phone
+
+            if (info.phone == "+7") binding.phone.text = null
 
             val icon = ContextCompat.getDrawable(
                 requireContext(),
@@ -348,8 +361,7 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
     private fun addMessage(comment: ThematicComment, image: Bitmap? = null) {
         if (image != null) {
             pickType = null
-            image.let { viewModel.uploadCommentImage(id, it) }
-            return
+            image.let { viewModel.uploadCommentImage(info?.chatId ?: -1, it) }
         }
 
         adapter[0] = comment
@@ -387,11 +399,6 @@ class ThematicChatCommentsDialog : BaseFullScreenDialog(R.layout.fragment_themat
             }
         }
     }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        findNavController().navigateUp()
-        super.onDismiss(dialog)
-    }
 }
 
 class CommentsAdapter(
@@ -421,6 +428,9 @@ class CommentsAdapter(
                     } else {
                         setImageBitmap(item.photo)
                     }
+
+                    val model = shapeAppearanceModel
+                    shapeAppearanceModel = model.withCornerSize { 12f }
                 } else setImageDrawable(null)
 
                 setOnClickListener {

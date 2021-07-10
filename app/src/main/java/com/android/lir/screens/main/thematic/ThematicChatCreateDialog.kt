@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.os.bundleOf
 import androidx.core.view.forEach
 import androidx.core.view.isVisible
@@ -29,7 +30,7 @@ import com.android.lir.common.AppGlobal
 import com.android.lir.databinding.FragmentThematicChatCreateBinding
 import com.android.lir.dataclases.ThematicChat
 import com.android.lir.dataclases.ThematicChatInfo
-import com.android.lir.utils.AndroidUtils
+import com.android.lir.utils.AppExtensions.compressBitmap
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.chat_view.*
@@ -147,7 +148,6 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
 
         setAccess()
 
-
         if (isEditing) {
             val newItems = arrayListOf<Pair<Drawable?, String?>>()
             chat?.images?.forEach { newItems.add(null to it) }
@@ -238,6 +238,7 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
 
     private suspend fun loadPictures(info: ThematicChatInfo) {
         val values = adapter.values.value ?: listOf()
+        this.info = info
 
         remainPictures = values.count()
 
@@ -258,7 +259,7 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
         withContext(Dispatchers.Default) {
             values.forEach {
                 it.first?.let { drawable ->
-                    val bitmap = AndroidUtils.compressDrawable(drawable)
+                    val bitmap = drawable.toBitmap().compressBitmap()
                     viewModel.uploadImage(info.chatId, bitmap)
                 }
             }
@@ -283,8 +284,13 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
                 Toast.makeText(requireContext(), "Фотографии загружены", Toast.LENGTH_LONG).show()
 
                 with(findNavController()) {
-                    navigateUp()
-                    navigate(R.id.toThematicChatCommentsDialog, requireArguments())
+                    dismiss()
+                    navigate(
+                        R.id.toThematicChatCommentsDialog, bundleOf(
+                            "info" to info,
+                            "coordinates" to info?.coordinates
+                        )
+                    )
                 }
             }
         }
@@ -342,7 +348,6 @@ class ThematicChatCreateDialog : BaseFullScreenDialog(R.layout.fragment_thematic
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        findNavController().navigateUp()
         setFragmentResult("update", bundleOf())
     }
 

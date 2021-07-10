@@ -171,4 +171,10 @@ interface LirApi {
         @Field("chat_id") chatId: Int,
         @Field("token") token: String
     ): Answer<AddUserToChatResponse>
+
+    @FormUrlEncoded
+    @POST(Urls.getUserInfo)
+    suspend fun getUserInfo(
+        @Field("token") token: String
+    ): Answer<GetUserInfoResponse>
 }

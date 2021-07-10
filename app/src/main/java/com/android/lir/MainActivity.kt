@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         FireBaseService.sharedPreferences = getSharedPreferences("sharedPref", MODE_PRIVATE)
 
         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
             }
             Log.d("OkHttp", " TOKEN: ${it.token}")
         }
+
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
     }
 }

@@ -92,7 +92,7 @@
                         android:drawablePadding="4dp"
                         android:gravity="center_vertical"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         app:drawableStartCompat="@drawable/ic_baseline_call_24"
                         app:drawableTint="#0FD10F"
                         tools:text="8 (929) 825-76-45" />
@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -122,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:numStars="5"
                         android:progressTint="#F17F1C"
-                        android:stepSize="0.01"
+                        android:stepSize="0.5"
                         tools:rating="4.0" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -150,14 +150,14 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="4K"
-                    android:textSize="10sp"
                     android:textColor="@color/end_color_gradient"
-                    android:textStyle="bold" />
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
+                    android:layout_height="wrap_content">
 
                     <ImageView
                         android:id="@+id/icon1"
@@ -330,11 +330,12 @@
                             android:id="@+id/creatorName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Андрей"
                             android:textAppearance="?android:textAppearanceMedium"
-                            android:textColor="@android:color/black" />
+                            android:textColor="@android:color/black"
+                            tools:text="Андрей" />
 
                         <TextView
+                            android:id="@+id/createdDate"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
@@ -425,6 +426,7 @@
             </RelativeLayout>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/messageBoxCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
@@ -439,22 +441,22 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/userIcon"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
-                        android:layout_gravity="bottom"
                         android:scaleType="centerCrop"
-                        android:src="#ff00ff"
+                        android:src="@drawable/ic_user_placeholder"
                         app:shapeAppearanceOverlay="@style/CircleImageView_36" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/commentMessage"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="12dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:hint="Новый комментарий" />
@@ -463,9 +465,7 @@
                         android:id="@+id/attachPhoto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
                         android:layout_marginStart="12dp"
-                        android:layout_marginBottom="6dp"
                         android:background="?selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_baseline_attach_file_24"
                         android:tint="#eeeeee" />
@@ -474,13 +474,11 @@
                         android:id="@+id/send"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="6dp"
-                        android:layout_marginBottom="6dp"
                         android:background="?selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_baseline_send_24"
-                        android:tint="@color/end_color_gradient" />
+                        android:tint="@color/point_color" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

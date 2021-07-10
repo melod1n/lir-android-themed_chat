@@ -1,11 +1,14 @@
 package com.android.lir.data
 
 import com.android.lir.common.AppGlobal
+import com.android.lir.dataclases.User
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class DataManager @Inject constructor() {
+    var user: User? = null
+
     fun clear() {
         phoneNumber = ""
         token = ""

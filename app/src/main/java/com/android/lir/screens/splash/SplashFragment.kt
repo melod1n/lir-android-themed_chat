@@ -30,13 +30,15 @@ class SplashFragment : BaseVMFragment<SplashViewModel>(R.layout.fragment_splash)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (activity?.intent?.extras != null) goToMainScreen() else viewModel.startTimer()
+        if (activity?.intent?.extras != null) goToMainScreen() else {
+           viewModel.loadCurrentUser()
+        }
         requestContactPermission()
     }
 
     override fun onEvent(event: Event) {
         super.onEvent(event)
-        when(event) {
+        when (event) {
             TimerOver -> goToMainScreen()
         }
     }
@@ -50,8 +52,13 @@ class SplashFragment : BaseVMFragment<SplashViewModel>(R.layout.fragment_splash)
     }
 
     private fun requestContactPermission() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS),
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.READ_CONTACTS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(
+                arrayOf(Manifest.permission.READ_CONTACTS),
                 ContactsFragment.PERMISSIONS_REQUEST_READ_CONTACTS
             )
         } else {
@@ -69,7 +76,11 @@ class SplashFragment : BaseVMFragment<SplashViewModel>(R.layout.fragment_splash)
             if (permissions[0] == Manifest.permission.READ_CONTACTS && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 setContactList()
             } else
-                Toast.makeText(context, "Пожалуйста разрешите использование списка контактов", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Пожалуйста разрешите использование списка контактов",
+                    Toast.LENGTH_SHORT
+                ).show()
         }
     }
 

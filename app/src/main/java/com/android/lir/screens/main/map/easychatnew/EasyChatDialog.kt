@@ -122,7 +122,7 @@ class EasyChatDialog : BottomSheetDialogFragment() {
         etMessage.inputType = inputType
         etMessage.hint = hint
         btnSend.isVisible = enableType == EnabledType.ENABLE
-        image_button_chat_menu.isVisible = enableType == EnabledType.ENABLE
+//        image_button_chat_menu.isVisible = enableType == EnabledType.ENABLE
     }
 
     override fun onDismiss(dialog: DialogInterface) {

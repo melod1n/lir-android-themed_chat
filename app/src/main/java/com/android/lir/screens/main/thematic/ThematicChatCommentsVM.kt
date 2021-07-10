@@ -94,6 +94,7 @@ class ThematicChatCommentsVM @Inject constructor(
 }
 
 object AddUserToChat : Event()
+
 data class MessageSent(val comment: ThematicComment) : Event()
 data class MessageError(val error: String) : Event()
 data class LoadThematicChatEvent(val response: ThematicChat) : Event()

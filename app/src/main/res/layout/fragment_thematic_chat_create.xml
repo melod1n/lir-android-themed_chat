@@ -113,10 +113,10 @@
                     android:textColor="@color/dark_grey" />
 
                 <TextView
+                    android:id="@+id/usersCountTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:id="@+id/usersCountTitle"
                     android:text="Количество пользователей"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
@@ -138,54 +138,63 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:id="@+id/addPhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="92dp"
+                            android:layout_height="92dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_add_photo_gradient"
+                            app:shapeAppearanceOverlay="@style/RoundedImageView_24" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_only_plus"
+                            android:visibility="visible" />
+
+                    </FrameLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/photos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:scrollbars="none"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_thematic_chat_photo" />
+
+
+                </LinearLayout>
+
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:scrollbars="none">
+                    android:scrollbars="none"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <FrameLayout
-                            android:id="@+id/addPhoto"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="4dp">
-
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:layout_width="92dp"
-                                android:layout_height="92dp"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_add_photo_gradient"
-                                app:shapeAppearanceOverlay="@style/RoundedImageView_24" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_only_plus"
-                                android:visibility="visible" />
-
-                        </FrameLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/photos"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:scrollbars="none"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:itemCount="10"
-                            tools:listitem="@layout/item_thematic_chat_photo" />
-
 
                     </LinearLayout>
 
                 </HorizontalScrollView>
-
 
                 <TextView
                     android:layout_width="wrap_content"

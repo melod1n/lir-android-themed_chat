@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.lir.base.vm.BaseVM
 import com.android.lir.base.vm.Event
 import com.android.lir.base.vm.ShowInfoDialogEvent
+import com.android.lir.common.AppGlobal
 import com.android.lir.network.AuthRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -22,19 +23,31 @@ class PhotoViewModel @Inject constructor(
     val image = bitmap.asStateFlow()
 
     fun regUser(phone: String, nickName: String, photo: String) {
-        makeJob({repo.regUser(phone, nickName, photo)}, onAnswer = {
-            if(!it.error.notFalse() && it.userId.notFalse()) {
-                tasksEventChannel.send(PopToPhone)
-            } else {
-                tasksEventChannel.send(ShowInfoDialogEvent(null,"Что-то пошло не так, попробуйте позже"))
+        makeJob({ repo.regUser(phone, nickName, photo) },
+            onAnswer = {
+                if (!it.error.notFalse() && it.userId.notFalse()) {
+                    tasksEventChannel.send(PopToPhone)
+                } else {
+                    tasksEventChannel.send(
+                        ShowInfoDialogEvent(
+                            null,
+                            "Что-то пошло не так, попробуйте позже"
+                        )
+                    )
+                    delay(1000)
+                    tasksEventChannel.send(PopToPhone)
+                }
+            },
+            onError = {
+                tasksEventChannel.send(
+                    ShowInfoDialogEvent(
+                        null,
+                        "Что-то пошло не так, попробуйте позже"
+                    )
+                )
                 delay(1000)
                 tasksEventChannel.send(PopToPhone)
-            }
-        }, onError = {
-            tasksEventChannel.send(ShowInfoDialogEvent(null,"Что-то пошло не так, попробуйте позже"))
-            delay(1000)
-            tasksEventChannel.send(PopToPhone)
-        })
+            })
     }
 
     fun saveBitMap(bm: Bitmap) = viewModelScope.launch {
@@ -42,4 +55,4 @@ class PhotoViewModel @Inject constructor(
     }
 }
 
-object PopToPhone: Event()
+object PopToPhone : Event()

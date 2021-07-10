@@ -94,18 +94,16 @@
             android:textSize="@dimen/text_size_18"
             tools:ignore="Autofill" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@null"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="16dp"
+            android:background="?selectableItemBackgroundBorderless"
             android:gravity="bottom"
-            android:paddingVertical="@dimen/margin_14"
-            android:paddingStart="5dp"
-            android:paddingEnd="@dimen/margin_16"
-            android:scaleType="center"
-            android:src="@drawable/ic_send_message"
+            android:src="@drawable/ic_baseline_send_24"
             app:tint="#5856D6" />
 
         <ImageButton
@@ -122,7 +120,6 @@
             android:src="@drawable/ic_oval"
             android:visibility="gone" />
     </LinearLayout>
-
 
     <View
         android:layout_width="match_parent"

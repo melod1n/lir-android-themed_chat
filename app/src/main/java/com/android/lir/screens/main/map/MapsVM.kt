@@ -7,12 +7,14 @@ import android.graphics.*
 import android.location.Location
 import android.util.Log
 import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.viewModelScope
 import com.android.lir.R
 import com.android.lir.base.vm.BaseVM
 import com.android.lir.base.vm.Event
+import com.android.lir.common.AppGlobal
 import com.android.lir.dataclases.Chat
 import com.android.lir.dataclases.ThematicChatInfo
 import com.android.lir.network.AuthRepo
@@ -74,8 +76,14 @@ class MapsVM @Inject constructor(
     var lastKnownLocation: Location? = null
 
     fun getAllChats(isInitial: Boolean = true) = viewModelScope.launch {
-        makeJob(
-            { repo.getAllChats() },
+        if (AppGlobal.shared.dataManager.token.isNotBlank())
+            makeJob({ repo.getUserInfo(AppGlobal.shared.dataManager.token) },
+                onAnswer = { userResponse ->
+                    userResponse.user.let { user ->
+                        AppGlobal.shared.dataManager.user = user
+                    }
+                })
+        makeJob({ repo.getAllChats() },
             onAnswer = {
                 if (!isInitial) removeMarkersByContainsTag("chat")
                 it.filterNotNull().filter { c -> c.coordinates?.contains("_") == true }

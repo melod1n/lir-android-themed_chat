@@ -2,6 +2,7 @@ package com.android.lir.screens.signin.phone
 
 import com.android.lir.base.vm.BaseVM
 import com.android.lir.base.vm.Event
+import com.android.lir.common.AppGlobal
 import com.android.lir.data.DataManager
 import com.android.lir.network.AuthRepo
 import dagger.hilt.android.lifecycle.HiltViewModel

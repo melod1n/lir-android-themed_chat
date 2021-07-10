@@ -279,3 +279,9 @@ data class AddPhotoToCommentResponse(
 data class AddUserToChatResponse(
     @SerializedName("error") var error: AlwaysString
 ) : Parcelable
+
+@Parcelize
+data class GetUserInfoResponse(
+    @SerializedName("error") var error: AlwaysString,
+    @SerializedName("user_info") var user: User
+) : Parcelable

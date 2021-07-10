@@ -100,4 +100,6 @@ class AuthRepoImpl @Inject constructor(
 
     override suspend fun addUserToChat(chatId: Int, token: String) =
         api.addUserToChat(chatId, token)
+
+    override suspend fun getUserInfo(token: String) = api.getUserInfo(token)
 }

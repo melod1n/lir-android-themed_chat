@@ -93,4 +93,8 @@ interface AuthRepo {
         chatId: Int,
         token: String
     ): Answer<AddUserToChatResponse>
+
+    suspend fun getUserInfo(
+        token: String
+    ): Answer<GetUserInfoResponse>
 }
