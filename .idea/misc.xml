@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Development/Android/lir-android-themed_chat/app/src/main/res/drawable/ic_camera.xml" value="0.3828125" />
+        <entry key="..\:/Development/Android/lir-android-themed_chat/app/src/main/res/layout/attach_dialog.xml" value="0.36102564102564105" />
+        <entry key="..\:/Development/Android/lir-android-themed_chat/app/src/main/res/layout/chat_detail_fragment.xml" value="0.36102564102564105" />
+        <entry key="..\:/Development/Android/lir-android-themed_chat/app/src/main/res/layout/fragment_chat.xml" value="0.36102564102564105" />
+        <entry key="..\:/Development/Android/lir-android-themed_chat/app/src/main/res/layout/fragment_thematic_chat_create.xml" value="0.36102564102564105" />
+        <entry key="..\:/Development/Android/lir-android-themed_chat/app/src/main/res/layout/item_attach.xml" value="0.36102564102564105" />
+        <entry key="..\:/Development/Android/lir-android-themed_chat/app/src/main/res/layout/view_load_photo.xml" value="0.36102564102564105" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

@@ -26,7 +26,6 @@
             android:src="@drawable/ic_arrow_back"
             app:tint="@color/white" />
 
-
         <ImageView
             android:id="@+id/partnerPhoto"
             android:layout_width="45dp"
@@ -81,7 +80,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/btnAdd"
+                android:id="@+id/attach"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8"

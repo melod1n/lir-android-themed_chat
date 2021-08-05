@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/contacts"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/contacts"
     app:startDestination="@id/contactsFragment">
 
     <fragment
         android:id="@+id/contactsFragment"
         android:name="com.android.lir.screens.main.contacts.contactscreen.ContactsFragment"
-        android:label="ContactsFragment" >
+        android:label="ContactsFragment">
+
         <action
             android:id="@+id/toPrivateChat"
             app:destination="@id/chatDetailFragment" />
 
     </fragment>
+
     <fragment
         android:id="@+id/chatDetailFragment"
         android:name="com.android.lir.screens.main.contacts.chatdetail.ChatDetailFragment"
         android:label="ChatDetailFragment">
+
         <argument
             android:name="chat_id"
             android:defaultValue="0"
             app:argType="integer" />
+
         <deepLink
             android:id="@+id/toChat"
             android:autoVerify="true"
             app:uri="lirapp://goToChat/{chat_id}" />
+        
+        <action
+            android:id="@+id/toAttachDialog"
+            app:destination="@+id/attachDialog" />
 
     </fragment>
+
+    <dialog
+        android:id="@+id/attachDialog"
+        android:name="com.android.lir.screens.main.contacts.chatdetail.ChatDetailAttachDialog"
+        android:label="AttachDialog" />
 </navigation>
