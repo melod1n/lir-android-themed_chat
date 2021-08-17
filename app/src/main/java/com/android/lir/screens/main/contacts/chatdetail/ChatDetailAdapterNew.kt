@@ -13,23 +13,35 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.android.lir.R
 import com.android.lir.activity.ShowPhotoActivity
+import com.android.lir.base.adapter.BindingHolder
+import com.android.lir.databinding.ItemChatMessageAttachReceivedBinding
+import com.android.lir.databinding.ItemChatMessageAttachSentBinding
 import com.android.lir.dataclases.PrivateMessage
 import com.android.lir.utils.AppExtensions
 import com.android.lir.utils.AppExtensions.formatDate
 import kotlinx.android.synthetic.main.item_chat_message_received.view.*
 import kotlinx.android.synthetic.main.item_chat_message_sent.view.*
-import javax.inject.Inject
 
-class ChatDetailAdapterNew @Inject constructor() :
+class ChatDetailAdapterNew constructor(
+    private var fragment: ChatDetailFragment
+) :
     ListAdapter<PrivateChatItem, RecyclerView.ViewHolder>(MESSAGES_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             0 -> SentViewHolder(inflater.inflate(R.layout.item_chat_message_sent, parent, false))
-            else -> ReceivedViewHolder(
+            1 -> ReceivedViewHolder(
                 inflater.inflate(
                     R.layout.item_chat_message_received,
+                    parent,
+                    false
+                )
+            )
+            2 -> AttachSentHolder(ItemChatMessageAttachSentBinding.inflate(inflater, parent, false))
+            else -> AttachReceivedHolder(
+                ItemChatMessageAttachReceivedBinding.inflate(
+                    inflater,
                     parent,
                     false
                 )
@@ -40,6 +52,8 @@ class ChatDetailAdapterNew @Inject constructor() :
     override fun getItemViewType(position: Int) = when (currentList.getOrNull(position)) {
         is PrivateChatItem.Send -> 0
         is PrivateChatItem.Receiver -> 1
+        is PrivateChatItem.AttachSend -> 2
+        is PrivateChatItem.AttachReceiver -> 3
         else -> -1
     }
 
@@ -57,6 +71,8 @@ class ChatDetailAdapterNew @Inject constructor() :
             when (holder) {
                 is SentViewHolder -> holder.bind(current.messageInChat, title)
                 is ReceivedViewHolder -> holder.bind(current.messageInChat, title)
+                is AttachSentHolder -> holder.bind(current.messageInChat, title)
+                is AttachReceivedHolder -> holder.bind(current.messageInChat, title)
                 else -> Unit
             }
         }
@@ -69,7 +85,7 @@ class ChatDetailAdapterNew @Inject constructor() :
             sender_message_date.isVisible = title != null
             sender_message_date.text = title
 
-            with(sPhoto){
+            with(sPhoto) {
                 isVisible = chatItem.photo != null
 
                 if (!isVisible) {
@@ -78,9 +94,11 @@ class ChatDetailAdapterNew @Inject constructor() :
                     return
                 }
 
-                load(chatItem.photo) {
-                    crossfade(100)
-                    error(ColorDrawable(Color.RED))
+                if (isVisible && chatItem.files.isEmpty()) {
+                    load(chatItem.photo) {
+                        crossfade(100)
+                        error(ColorDrawable(Color.RED))
+                    }
                 }
 
                 setOnClickListener {
@@ -104,7 +122,7 @@ class ChatDetailAdapterNew @Inject constructor() :
             reciever_message_date.isVisible = title != null
             reciever_message_date.text = title
 
-            with(rPhoto){
+            with(rPhoto) {
                 isVisible = chatItem.photo != null
 
                 if (!isVisible) {
@@ -113,9 +131,11 @@ class ChatDetailAdapterNew @Inject constructor() :
                     return
                 }
 
-                load(chatItem.photo) {
-                    crossfade(100)
-                    error(ColorDrawable(Color.RED))
+                if (isVisible && chatItem.files.isEmpty()) {
+                    load(chatItem.photo) {
+                        crossfade(100)
+                        error(ColorDrawable(Color.RED))
+                    }
                 }
 
                 setOnClickListener {
@@ -126,9 +146,47 @@ class ChatDetailAdapterNew @Inject constructor() :
                         ).putExtra("image", chatItem.photo)
                     )
                 }
-
             }
         }
+    }
+
+    inner class AttachSentHolder(binding: ItemChatMessageAttachSentBinding) :
+        BindingHolder<ItemChatMessageAttachSentBinding>(binding) {
+
+        fun bind(chatItem: PrivateMessage, dateTitle: String?) = with(binding) {
+            attachPicture.setImageResource(if (chatItem.location == null) R.drawable.ic_baseline_insert_drive_file_24 else R.drawable.ic_baseline_location_on_24)
+            title.text = if (chatItem.location == null) "Filename" else "Geolocation"
+
+            time.text = chatItem.createdAt.formatDate("yyyy-MM-dd HH:mm:ss", "HH:mm")
+
+            date.isVisible = dateTitle != null
+            date.text = dateTitle
+
+            binding.root.setOnClickListener {
+                chatItem.location?.let { fragment.showLocation(it) }
+                chatItem.files.firstOrNull()?.let { fragment.downloadFile(it) }
+            }
+        }
+    }
+
+    inner class AttachReceivedHolder(binding: ItemChatMessageAttachReceivedBinding) :
+        BindingHolder<ItemChatMessageAttachReceivedBinding>(binding) {
+
+        fun bind(chatItem: PrivateMessage, dateTitle: String?) = with(binding) {
+            attachPicture.setImageResource(if (chatItem.location == null) R.drawable.ic_baseline_insert_drive_file_24 else R.drawable.ic_baseline_location_on_24)
+            title.text = if (chatItem.location == null) "Filename" else "Geolocation"
+
+            time.text = chatItem.createdAt.formatDate("yyyy-MM-dd HH:mm:ss", "HH:mm")
+
+            date.isVisible = dateTitle != null
+            date.text = dateTitle
+
+            binding.root.setOnClickListener {
+                chatItem.location?.let { fragment.showLocation(it) }
+                chatItem.files.firstOrNull()?.let { fragment.downloadFile(it) }
+            }
+        }
+
     }
 
     companion object {
@@ -147,4 +205,10 @@ class ChatDetailAdapterNew @Inject constructor() :
 sealed class PrivateChatItem(open val messageInChat: PrivateMessage) {
     data class Send(override val messageInChat: PrivateMessage) : PrivateChatItem(messageInChat)
     data class Receiver(override val messageInChat: PrivateMessage) : PrivateChatItem(messageInChat)
+
+    data class AttachSend(override val messageInChat: PrivateMessage) :
+        PrivateChatItem(messageInChat)
+
+    data class AttachReceiver(override val messageInChat: PrivateMessage) :
+        PrivateChatItem(messageInChat)
 }

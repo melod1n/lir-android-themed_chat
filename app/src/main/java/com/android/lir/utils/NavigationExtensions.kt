@@ -17,13 +17,16 @@
 package com.android.lir.utils
 
 import android.content.Intent
+import android.os.Bundle
 import android.util.SparseArray
+import androidx.annotation.IdRes
 import androidx.core.util.forEach
 import androidx.core.util.set
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.NavHostFragment
 import com.android.lir.R
 import com.android.lir.data.DataManager
@@ -34,6 +37,21 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
  *
  * This sample is a workaround until the Navigation Component supports multiple back stacks.
  */
+fun NavController.safeNavigate(direction: NavDirections) {
+    currentDestination?.getAction(direction.actionId)?.run { navigate(direction) }
+}
+
+fun NavController.safeNavigate(
+    @IdRes currentDestinationId: Int,
+    @IdRes id: Int,
+    args: Bundle? = null
+) {
+    val cur = currentDestination?.id
+    if (currentDestinationId == currentDestination?.id) {
+        navigate(id, args)
+    }
+}
+
 fun BottomNavigationView.setupWithNavController(
     navGraphIds: List<Int>,
     fragmentManager: FragmentManager,

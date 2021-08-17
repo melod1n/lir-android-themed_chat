@@ -33,4 +33,5 @@
         <item name="colorControlHighlight">@color/point_color</item>
     </style>
 
+    <style name="ShowPhotoTheme" parent="Theme.MaterialComponents.NoActionBar" />
 </resources>

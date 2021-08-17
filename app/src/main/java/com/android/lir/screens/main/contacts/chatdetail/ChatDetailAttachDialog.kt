@@ -12,6 +12,7 @@ import android.viewbinding.library.fragment.viewBinding
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
+import androidx.navigation.fragment.findNavController
 import com.android.lir.R
 import com.android.lir.base.adapter.BaseAdapter
 import com.android.lir.base.adapter.BindingHolder
@@ -34,35 +35,52 @@ class ChatDetailAttachDialog : BottomSheetDialogFragment() {
 
         binding.cancel.setOnClickListener { dismiss() }
 
-        val drawables = listOf(
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_photo_camera_24)!!,
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_image_24)!!,
-            ContextCompat.getDrawable(
-                requireContext(),
-                R.drawable.ic_baseline_insert_drive_file_24
-            )!!,
-        )
-
         val items = arrayListOf(
-            AttachItem(drawables[0], "Camera"),
-            AttachItem(drawables[1], "Gallery"),
-            AttachItem(drawables[2], "File")
+            AttachItem(
+                "camera",
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_baseline_photo_camera_24
+                )!!,
+                "Камера"
+            ),
+            AttachItem(
+                "gallery",
+                ContextCompat.getDrawable(
+                    requireContext(), R.drawable.ic_baseline_image_24
+                )!!,
+                "Галерея"
+            ),
+            AttachItem(
+                "file", ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_baseline_insert_drive_file_24
+                )!!, "Файл"
+            ),
+            AttachItem(
+                "geolocation", ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_baseline_location_on_24
+                )!!, "Геопозиция"
+            )
         )
 
         val adapter = AttachAdapter(requireContext(), items).also { adapter ->
             adapter.itemClickListener = { position ->
-                setFragmentResult("pickType", bundleOf("type" to position))
+                findNavController().navigateUp()
                 dismiss()
+
+                setFragmentResult("pickType", bundleOf("type" to adapter[position].key))
             }
         }
-        binding.recyclerView.adapter = adapter
 
+        binding.recyclerView.adapter = adapter
 
     }
 
 }
 
-data class AttachItem(val icon: Drawable, val text: String)
+data class AttachItem(val key: String, val icon: Drawable, val text: String)
 
 class AttachAdapter(
     context: Context,

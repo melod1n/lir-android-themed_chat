@@ -14,13 +14,12 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/rlEnterOtp"
             android:layout_alignParentTop="true"
-            android:layout_marginHorizontal="@dimen/margin_30"
+            android:layout_marginHorizontal="30dp"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center"
-            android:lineHeight="28dp"
             android:text="@string/sign_in_enter_otp"
             android:textColor="@color/white"
-            android:textSize="@dimen/margin_16" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:id="@+id/rlEnterOtp"
@@ -30,60 +29,60 @@
             android:layout_centerVertical="true"
             android:orientation="horizontal">
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etFirst"
                 android:layout_width="40dp"
-                android:maxLength="1"
                 android:layout_height="48dp"
-                android:maxLines="1"
-                android:layout_marginEnd="@dimen/margin_16"
-                android:inputType="number"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/shape_empty_field"
                 android:fontFamily="@font/roboto_bold"
                 android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:maxLines="1"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="16sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etSecond"
                 android:layout_width="40dp"
                 android:layout_height="48dp"
-                android:maxLength="1"
-                android:layout_marginEnd="@dimen/margin_16"
-                android:maxLines="1"
-                android:inputType="number"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/shape_empty_field"
                 android:fontFamily="@font/roboto_bold"
                 android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:maxLines="1"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="16sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etThird"
                 android:layout_width="40dp"
                 android:layout_height="48dp"
-                android:maxLength="1"
-                android:inputType="number"
-                android:maxLines="1"
-                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/shape_empty_field"
                 android:fontFamily="@font/roboto_bold"
                 android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:maxLines="1"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="16sp" />
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etFourth"
                 android:layout_width="40dp"
                 android:layout_height="48dp"
-                android:maxLength="1"
-                android:inputType="number"
-                android:maxLines="1"
                 android:background="@drawable/shape_empty_field"
                 android:fontFamily="@font/roboto_bold"
                 android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:maxLines="1"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -95,7 +94,7 @@
             android:gravity="center"
             android:text="@string/sign_in_resend_otp_after"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_14" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

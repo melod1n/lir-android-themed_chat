@@ -29,15 +29,31 @@
             android:id="@+id/toChat"
             android:autoVerify="true"
             app:uri="lirapp://goToChat/{chat_id}" />
-        
+
         <action
             android:id="@+id/toAttachDialog"
             app:destination="@+id/attachDialog" />
+
+        <action
+            android:id="@+id/toPickLocationFragment"
+            app:destination="@+id/pickLocationFragment" />
 
     </fragment>
 
     <dialog
         android:id="@+id/attachDialog"
         android:name="com.android.lir.screens.main.contacts.chatdetail.ChatDetailAttachDialog"
-        android:label="AttachDialog" />
+        android:label="AttachDialog">
+
+        <action
+            android:id="@+id/toPickLocationFragment"
+            app:destination="@+id/pickLocationFragment" />
+
+    </dialog>
+
+    <fragment
+        android:id="@+id/pickLocationFragment"
+        android:name="com.android.lir.activity.PickLocationFragment"
+        android:label="PickLocationFragment" />
+
 </navigation>

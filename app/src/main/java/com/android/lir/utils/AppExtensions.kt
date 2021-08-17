@@ -120,7 +120,7 @@ object AppExtensions {
         it.resume(BitmapFactory.decodeStream(isBm, null, newOpts)!!)
     }
 
-    fun Context.toBitMap(uri: Uri?): Bitmap? = when {
+    fun Context.toBitmap(uri: Uri?): Bitmap? = when {
         uri == null -> null
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.P -> ImageDecoder.decodeBitmap(
             ImageDecoder.createSource(

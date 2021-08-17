@@ -159,7 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/icon1"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -168,7 +168,7 @@
                         android:src="@drawable/ic_oval_2"
                         app:layout_constraintEnd_toEndOf="parent" />
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/icon2"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
@@ -177,7 +177,7 @@
                         android:src="@drawable/ic_oval_2"
                         app:layout_constraintEnd_toEndOf="parent" />
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/icon3"
                         android:layout_width="25dp"
                         android:layout_height="25dp"

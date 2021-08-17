@@ -19,7 +19,7 @@ import com.android.lir.base.vm.BaseVMFragment
 import com.android.lir.base.vm.Event
 import com.android.lir.utils.AppExtensions.compressBitmap
 import com.android.lir.utils.AppExtensions.toBase64
-import com.android.lir.utils.AppExtensions.toBitMap
+import com.android.lir.utils.AppExtensions.toBitmap
 import com.github.florent37.runtimepermission.kotlin.askPermission
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_load_photo.*
@@ -83,7 +83,7 @@ class PhotoFragment : BaseVMFragment<PhotoViewModel>(R.layout.fragment_load_phot
     }
 
     private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
-        context?.toBitMap(it)?.let { bm ->
+        context?.toBitmap(it)?.let { bm ->
             viewModel.saveBitMap(bm)
         }
     }

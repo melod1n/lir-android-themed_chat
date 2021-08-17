@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/margin_10"
-    android:paddingTop="@dimen/margin_7"
+    android:layout_marginStart="10dp"
+    android:paddingTop="7dp"
     android:paddingBottom="5dp"
     tools:ignore="MissingPrefix">
 
@@ -13,23 +13,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/margin_16"
-        android:layout_marginBottom="@dimen/margin_16"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:alpha="0.7"
+        android:fontFamily="@font/roboto_regular"
         android:text="Вчера"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:alpha="0.7"
-        android:textSize="@dimen/text_size_14"
-        android:fontFamily="@font/roboto_regular"
-        android:visibility="gone"/>
+        android:textSize="14sp"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/sender_photo"
         android:layout_below="@id/sender_message_date"
         android:layout_marginStart="45dp"
+        android:layout_toStartOf="@id/sender_photo"
         android:orientation="vertical">
 
         <LinearLayout
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/rectangle_blue"
             android:orientation="vertical">
 
@@ -45,44 +45,44 @@
                 android:id="@+id/tvSenderName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_14"
-                android:gravity="end"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="14dp"
                 android:fontFamily="@font/roboto_bold"
-                android:visibility="gone"
+                android:gravity="end"
                 android:text="Настя"
                 android:textColor="@color/purple"
-                android:textSize="@dimen/text_size_10" />
+                android:textSize="10sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/textMessageBodySent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="11dp"
-                android:layout_marginTop="@dimen/margin_14"
+                android:layout_marginTop="14dp"
                 android:layout_marginEnd="36dp"
                 android:autoLink="all"
+                android:fontFamily="@font/roboto_regular"
                 android:linksClickable="true"
                 android:paddingLeft="13dp"
-                android:paddingEnd="@dimen/margin_10"
+                android:paddingEnd="10dp"
                 android:text="Добрый день! Чем могу помочь?"
                 android:textColor="@color/white"
                 android:textColorLink="@color/white"
                 android:textIsSelectable="true"
-                android:textSize="@dimen/text_size_15"
-                android:fontFamily="@font/roboto_regular" />
+                android:textSize="15sp" />
 
             <ImageView
                 android:id="@+id/sPhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="@dimen/margin_6"
+                android:layout_marginTop="6dp"
                 android:layout_marginEnd="40dp"
                 android:adjustViewBounds="true"
+                android:contentDescription="@null"
                 android:visibility="gone"
-                tools:src="@drawable/delete"
-                android:contentDescription="@null" />
+                tools:src="@drawable/delete" />
 
             <TextView
                 android:id="@+id/tvTimeSend"
@@ -92,11 +92,11 @@
                 android:layout_marginBottom="5dp"
                 android:fontFamily="@font/roboto_regular"
                 android:letterSpacing="0.01"
-                android:paddingEnd="@dimen/margin_10"
+                android:paddingEnd="10dp"
                 android:paddingBottom="5dp"
                 android:text="10:40"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_8" />
+                android:textSize="8sp" />
 
 
         </LinearLayout>
@@ -104,8 +104,8 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/message_body"
             android:layout_alignEnd="@id/message_body"
+            android:layout_alignBottom="@id/message_body"
             android:layout_marginEnd="-10dp"
             android:src="@drawable/ic_blue" />
 
@@ -115,14 +115,13 @@
         android:id="@+id/sender_photo"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_gravity="bottom"
-        android:layout_marginEnd="@dimen/margin_10"
-        android:layout_alignParentEnd="true"
         android:layout_alignBottom="@id/message"
-        android:layout_marginTop="@dimen/margin_16"
-        tools:background="@drawable/ic_oval"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="10dp"
+        android:scaleType="centerCrop"
         android:visibility="gone"
-        android:scaleType="centerCrop"/>
-
+        tools:background="@drawable/ic_oval" />
 
 </RelativeLayout>

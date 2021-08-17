@@ -2,31 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".screens.main.subscribe.SubscriptionsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/toolbar_gradient"
-        android:elevation="@dimen/margin_4"
+        android:elevation="4dp"
         android:gravity="center_vertical">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="72dp"
-            android:fontFamily="@font/roboto_medium"
             android:layout_weight="1"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingVertical="16dp"
             android:text="@string/title_subscriptions"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_20"
-            android:paddingTop="@dimen/margin_16"
-            android:paddingBottom="@dimen/margin_16"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
 
-    <include layout="@layout/content_main"/>
+    <include layout="@layout/content_main" />
 </LinearLayout>

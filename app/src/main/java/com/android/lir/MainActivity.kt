@@ -44,4 +44,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
 
         FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
     }
+
+
 }

@@ -9,15 +9,14 @@
     android:paddingTop="16dp"
     tools:ignore="SpUsage">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ic_close"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_margin="@dimen/margin_16"
+        android:layout_margin="16dp"
         android:src="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
@@ -39,7 +38,7 @@
         android:id="@+id/linLayEnterMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_10"
+        android:layout_margin="10dp"
         android:background="@drawable/shape_black_10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,8 +53,8 @@
             android:layout_weight="0.05"
             android:background="@null"
             android:gravity="bottom"
-            android:paddingHorizontal="@dimen/margin_10"
-            android:paddingVertical="@dimen/margin_14"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="14dp"
             android:scaleType="center"
             android:src="@drawable/ic_attach"
             android:visibility="gone"
@@ -73,8 +72,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/margin_12"
-            android:layout_marginRight="5dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:ems="10"
@@ -91,7 +90,7 @@
             android:singleLine="false"
             android:textColor="@color/black"
             android:textColorHint="@color/black10"
-            android:textSize="@dimen/text_size_18"
+            android:textSize="18sp"
             tools:ignore="Autofill" />
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -106,7 +105,7 @@
             android:src="@drawable/ic_baseline_send_24"
             app:tint="#5856D6" />
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btn_edit"
             android:layout_width="20dp"
             android:layout_height="20dp"

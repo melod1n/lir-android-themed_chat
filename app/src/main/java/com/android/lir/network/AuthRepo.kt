@@ -28,6 +28,7 @@ interface AuthRepo {
         chatId: Int,
         text: String,
         photo: String?,
+        geocode: String?,
         token: String
     ): Answer<PutPrivateResponse>
 
@@ -97,4 +98,12 @@ interface AuthRepo {
     suspend fun getUserInfo(
         token: String
     ): Answer<GetUserInfoResponse>
+
+    suspend fun addAttach(
+        chatId: Int,
+        ext: String,
+        chatType: Int,
+        fileBase64: String,
+        token: String
+    ): Answer<AddAttachResponse>
 }

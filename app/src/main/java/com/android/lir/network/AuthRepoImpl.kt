@@ -26,8 +26,9 @@ class AuthRepoImpl @Inject constructor(
         chatId: Int,
         text: String,
         photo: String?,
+        geocode: String?,
         token: String
-    ) = api.addPrivateMessage(chatId, text, photo, token)
+    ) = api.addPrivateMessage(chatId, text, photo, geocode, token)
 
     override suspend fun getAllChats() = api.getAllChats()
     override suspend fun getChatById(page: Int) = api.getChatById(page)
@@ -102,4 +103,12 @@ class AuthRepoImpl @Inject constructor(
         api.addUserToChat(chatId, token)
 
     override suspend fun getUserInfo(token: String) = api.getUserInfo(token)
+
+    override suspend fun addAttach(
+        chatId: Int,
+        ext: String,
+        chatType: Int,
+        fileBase64: String,
+        token: String
+    ) = api.addAttach(chatId, ext, chatType, fileBase64, token)
 }

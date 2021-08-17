@@ -60,6 +60,7 @@ interface LirApi {
         @Field("chat_id") chatId: Int,
         @Field("text") text: String,
         @Field("photo") photo: String?,
+        @Field("geocode") geocode: String?,
         @Field("token") token: String
     ): Answer<PutPrivateResponse>
 
@@ -177,4 +178,14 @@ interface LirApi {
     suspend fun getUserInfo(
         @Field("token") token: String
     ): Answer<GetUserInfoResponse>
+
+    @FormUrlEncoded
+    @POST(Urls.addAttach)
+    suspend fun addAttach(
+        @Field("chat_id") chatId: Int,
+        @Field("ext") ext: String,
+        @Field("type") chatType: Int,
+        @Field("file") fileBase64: String,
+        @Field("token") token: String
+    ): Answer<AddAttachResponse>
 }

@@ -96,7 +96,7 @@ data class PrivateChatInfo(
 @Parcelize
 data class PutPrivateResponse(
     @SerializedName("error") var error: AlwaysString,
-    @SerializedName("message_id") var messageId: AlwaysString
+    @SerializedName("message_id") var messageId: Int
 ) : Parcelable
 
 @Parcelize
@@ -122,11 +122,18 @@ data class PrivateMessage(
     @SerializedName("photo") val photo: String?,
     @SerializedName("user_id") var userId: Int,
     @SerializedName("created_at") var createdAt: String,
+    @SerializedName("geocode") var location: String?,
+    @SerializedName("files") var files: List<String> = arrayListOf()
 ) : Parcelable {
     fun toModel(myId: Int): PrivateChatItem {
-        return if (myId == userId) {
-            PrivateChatItem.Send(this)
-        } else PrivateChatItem.Receiver(this)
+        return if (files.isNotEmpty() || location != null) {
+            if (myId == userId) PrivateChatItem.AttachSend(this)
+            else PrivateChatItem.AttachReceiver(this)
+        } else {
+            if (myId == userId) {
+                PrivateChatItem.Send(this)
+            } else PrivateChatItem.Receiver(this)
+        }
     }
 }
 
@@ -284,4 +291,9 @@ data class AddUserToChatResponse(
 data class GetUserInfoResponse(
     @SerializedName("error") var error: AlwaysString,
     @SerializedName("user_info") var user: User
+) : Parcelable
+
+@Parcelize
+data class AddAttachResponse(
+    @SerializedName("error") var error: AlwaysString
 ) : Parcelable

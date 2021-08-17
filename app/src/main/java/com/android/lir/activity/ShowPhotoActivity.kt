@@ -3,14 +3,13 @@ package com.android.lir.activity
 import android.content.ContentValues
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.viewbinding.library.activity.viewBinding
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.drawable.toBitmap
 import coil.load
 import com.android.lir.R
@@ -26,6 +25,7 @@ class ShowPhotoActivity : BaseActivity(R.layout.activity_show_photo) {
     private val binding: ActivityShowPhotoBinding by viewBinding()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.ShowPhotoTheme)
         super.onCreate(savedInstanceState)
 
         val bitmapImage = intent.getByteArrayExtra("bitmapImage")
@@ -38,16 +38,14 @@ class ShowPhotoActivity : BaseActivity(R.layout.activity_show_photo) {
             binding.photoView.setImageBitmap(bitmap)
         }
 
-        binding.photoView.setOnLongClickListener { v ->
-            AlertDialog.Builder(this)
-                .setMessage("Вы хотите скачать фотографию?")
-                .setPositiveButton("Да") { d, i ->
-                    savePhotoToStorage(binding.photoView.drawable.toBitmap())
-                }
-                .setNegativeButton("Нет", null)
-                .show()
-
-            true
+        binding.toolbar.setNavigationIconTint(Color.WHITE)
+        binding.toolbar.setNavigationOnClickListener { onBackPressed() }
+        binding.toolbar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.download) {
+                savePhotoToStorage(binding.photoView.drawable.toBitmap())
+                return@setOnMenuItemClickListener true
+            }
+            false
         }
     }
 
@@ -64,7 +62,7 @@ class ShowPhotoActivity : BaseActivity(R.layout.activity_show_photo) {
                     put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
                 }
 
-                val imageUri: Uri? =
+                val imageUri =
                     resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
 
                 fos = imageUri?.let { resolver.openOutputStream(it) }

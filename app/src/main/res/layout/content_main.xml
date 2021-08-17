@@ -9,14 +9,14 @@
         android:id="@+id/textInputLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/callTo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:inputType="text"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColor="@color/purple"/>
+            android:textColor="@color/purple" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -34,32 +34,32 @@
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_weight="1"
         android:background="@drawable/button_image_passive"
         android:contentDescription="Аудио вызов"
-        android:tint="@color/purple"
         app:layout_constraintEnd_toStartOf="@+id/button_video_call"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-        app:srcCompat="@drawable/ic_phone_black_40dp"/>
+        app:srcCompat="@drawable/ic_phone_black_40dp"
+        app:tint="@color/purple" />
 
     <ImageButton
         android:id="@+id/button_video_call"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_weight="1"
         android:background="@drawable/button_image_passive"
         android:contentDescription="Видео вызов"
-        android:tint="@color/purple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/audioCallButton"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-        app:srcCompat="@drawable/ic_videocam_black_40dp"/>
+        app:srcCompat="@drawable/ic_videocam_black_40dp"
+        app:tint="@color/purple" />
 
 
     <FrameLayout

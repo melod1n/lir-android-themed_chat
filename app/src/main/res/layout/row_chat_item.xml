@@ -30,8 +30,8 @@
         android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_12"
-        android:layout_marginTop="@dimen/margin_12"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="12dp"
         android:ellipsize="end"
         android:letterSpacing="0.03"
         android:maxLines="1"
@@ -48,7 +48,7 @@
         android:id="@+id/messageText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_6"
+        android:layout_marginTop="6dp"
         android:ellipsize="end"
         android:letterSpacing="0.03"
         android:maxLines="2"
@@ -66,7 +66,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/messageCount"
-        android:layout_marginEnd="@dimen/margin_12"
+        android:layout_marginEnd="12dp"
         tools:text="10:45" />
 
     <TextView
@@ -76,7 +76,7 @@
         android:background="@color/end_color_gradient"
         android:ellipsize="end"
         android:maxLines="1"
-        android:padding="@dimen/margin_4"
+        android:padding="4dp"
         android:textColor="@color/white"
         android:maxLength="4"
         app:layout_constraintEnd_toEndOf="@id/time"
@@ -91,7 +91,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/margin_12"
+        android:layout_marginTop="12dp"
         android:background="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/name"

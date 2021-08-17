@@ -38,48 +38,55 @@ class OtpFragment : BaseVMFragment<OtpViewModel>(R.layout.fragment_otp) {
 
     private fun setListeners() {
         etSecond.setOnFocusChangeListener { _, _ ->
-            if (etFirst.text.isEmpty()) etFirst.requestFocus()
+            if (etFirst.text.toString().isEmpty()) etFirst.requestFocus()
         }
         etThird.setOnFocusChangeListener { _, _ ->
             when {
-                etFirst.text.isEmpty() -> etFirst.requestFocus()
-                etSecond.text.isEmpty() -> etSecond.requestFocus()
+                etFirst.text.toString().isEmpty() -> etFirst.requestFocus()
+                etSecond.text.toString().isEmpty() -> etSecond.requestFocus()
             }
         }
         etFourth.setOnFocusChangeListener { _, _ ->
             when {
-                etFirst.text.isEmpty() -> etFirst.requestFocus()
-                etSecond.text.isEmpty() -> etSecond.requestFocus()
-                etThird.text.isEmpty() -> etThird.requestFocus()
+                etFirst.text.toString().isEmpty() -> etFirst.requestFocus()
+                etSecond.text.toString().isEmpty() -> etSecond.requestFocus()
+                etThird.text.toString().isEmpty() -> etThird.requestFocus()
             }
         }
         etFirst.addTextChangedListener {
             if (it?.length == 1) {
-                etFirst.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_active_field, null)
+                etFirst.background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.shape_active_field, null)
                 etSecond.requestFocus()
             } else {
-                etFirst.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_empty_field, null)
+                etFirst.background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.shape_empty_field, null)
             }
         }
         etSecond.addTextChangedListener {
             if (it?.length == 1) {
-                etSecond.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_active_field, null)
+                etSecond.background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.shape_active_field, null)
                 etThird.requestFocus()
             } else {
-                etSecond.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_empty_field, null)
+                etSecond.background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.shape_empty_field, null)
             }
         }
         etThird.addTextChangedListener {
             if (it?.length == 1) {
-                etThird.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_active_field, null)
+                etThird.background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.shape_active_field, null)
                 etFourth.requestFocus()
             } else {
-                etThird.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_empty_field, null)
+                etThird.background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.shape_empty_field, null)
             }
         }
         etFourth.addTextChangedListener {
             if (it?.length == 1) {
-                etFourth.background = ResourcesCompat.getDrawable(resources, R.drawable.shape_active_field, null)
+                etFourth.background =
+                    ResourcesCompat.getDrawable(resources, R.drawable.shape_active_field, null)
                 activity?.hideKeyboard()
                 etFourth.clearFocus()
                 rlEnterOtp.requestFocus()
@@ -99,27 +106,28 @@ class OtpFragment : BaseVMFragment<OtpViewModel>(R.layout.fragment_otp) {
         etSecond.setOnKeyListener { _, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_DEL) {
                 etFirst.requestFocus()
-                etFirst.text.clear()
+                etFirst.text = null
             }
             false
         }
         etThird.setOnKeyListener { _, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_DEL) {
                 etSecond.requestFocus()
-                etSecond.text.clear()
+                etSecond.text = null
             }
             false
         }
         etFourth.setOnKeyListener { _, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_DEL) {
                 etThird.requestFocus()
-                etThird.text.clear()
+                etThird.text = null
             }
             false
         }
     }
 
-    private fun getCode() = etFirst.text.toString() + etSecond.text.toString() + etThird.text.toString() + etFourth.text.toString()
+    private fun getCode() =
+        etFirst.text.toString() + etSecond.text.toString() + etThird.text.toString() + etFourth.text.toString()
 
     override fun onEvent(event: Event) {
         super.onEvent(event)
@@ -127,6 +135,7 @@ class OtpFragment : BaseVMFragment<OtpViewModel>(R.layout.fragment_otp) {
             is GoToAuth -> goToMain()
         }
     }
+
     private fun goToMain() {
         activity?.hideKeyboard()
 

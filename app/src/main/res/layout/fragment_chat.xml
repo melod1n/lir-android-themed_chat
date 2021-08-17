@@ -17,7 +17,7 @@
         app:titleTextColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/toolbar_gradient"
-        android:elevation="@dimen/margin_4"
+        android:elevation="4dp"
         android:gravity="center_vertical">
 
 

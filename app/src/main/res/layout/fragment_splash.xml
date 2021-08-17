@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="198dp"
         android:layout_height="300dp"
         app:layout_constraintStart_toStartOf="parent"

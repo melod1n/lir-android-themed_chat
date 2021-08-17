@@ -16,7 +16,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:src="@drawable/ic_simple_chat" />
@@ -24,11 +24,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_regular"
             android:text="@string/chat_chat"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_13" />
+            android:textSize="13sp" />
 
     </LinearLayout>
 
@@ -40,10 +40,10 @@
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingTop="@dimen/margin_30"
-        android:paddingBottom="@dimen/margin_24">
+        android:paddingTop="30dp"
+        android:paddingBottom="24dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:src="@drawable/ic_thematic_chat" />
@@ -51,11 +51,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_regular"
             android:text="@string/chat_themed"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_13" />
+            android:textSize="13sp" />
 
     </LinearLayout>
 
@@ -69,7 +69,7 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:src="@drawable/ic_easy" />
@@ -77,11 +77,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_regular"
             android:text="@string/chat_channel"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_13" />
+            android:textSize="13sp" />
 
     </LinearLayout>
 
@@ -94,7 +94,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:src="@drawable/ic_commercial_chat" />
@@ -102,11 +102,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_regular"
             android:text="@string/chat_commercial"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_12" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 

@@ -9,6 +9,7 @@ import androidx.core.graphics.drawable.toBitmap
 import com.android.lir.io.BytesOutputStream
 import java.io.*
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 object AndroidUtils {
@@ -91,6 +92,16 @@ object AndroidUtils {
         val imageBytes = byteArrayOutputStream.toByteArray()
 
         it.resume(Base64.encodeToString(imageBytes, Base64.DEFAULT))
+    }
+
+    suspend fun encodeBytesToBase64(array: ByteArray) = suspendCoroutine<String> {
+        try {
+            val base64 = Base64.encodeToString(array, Base64.DEFAULT)
+            it.resume(base64)
+        } catch (e: Exception) {
+            it.resumeWithException(e)
+        }
+
     }
 
     fun serialize(source: Any?): ByteArray? {

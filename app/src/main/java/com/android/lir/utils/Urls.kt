@@ -35,6 +35,8 @@ object Urls {
     const val addUserToChat = "add_user_to_chat"
 
     const val getUserInfo = "get_user_info"
+
+    const val addAttach = "add_attach"
 }
 
 object FieldValue {
